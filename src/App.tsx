@@ -3,8 +3,8 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from '@/pages/Home';
 import NotFound from '@/pages/NotFound';
-import { LayoutMain } from '@/Layout/LayoutMain';
-import LayoutAuth from '@/Layout/LayoutAuth';
+import { LayoutMain } from '@/layouts/LayoutMain';
+import LayoutAuth from '@/layouts/LayoutAuth';
 import Login from '@/pages/Login';
 import Product from '@/pages/Product';
 function App() {

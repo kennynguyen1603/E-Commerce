@@ -1,10 +1,10 @@
 // import React from 'react'
 
-import AppleWatch from "@/components/Home/AppleWatch";
-import Iphone from "@/components/Home/Iphone";
-import LandingPart from "@/components/Home/LandingPart";
-import NewestCollection from "@/components/Home/NewestCollection";
-import { Newsletter } from "@/components/Home/Newsletter";
+import AppleWatch from "@/components/home/AppleWatch";
+import Iphone from "@/components/home/Iphone";
+import LandingPart from "@/components/home/LandingPart";
+import NewestCollection from "@/components/home/NewestCollection";
+import { Newsletter } from "@/components/home/Newsletter";
 
 export default function Home() {
   return (
