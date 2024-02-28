@@ -3,14 +3,12 @@
 import AppleWatch from "@/components/Home/AppleWatch";
 import Iphone from "@/components/Home/Iphone";
 import LandingPart from "@/components/Home/LandingPart";
-import NavbarSpecial from "@/components/Home/NavbarSpecial";
 import NewestCollection from "@/components/Home/NewestCollection";
 import { Newsletter } from "@/components/Home/Newsletter";
 
 export default function Home() {
   return (
     <div>
-      <NavbarSpecial />
       <LandingPart />
       <NewestCollection />
       <Iphone />
