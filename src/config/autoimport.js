@@ -94,7 +94,10 @@ export const configAutoImport = {
   vueTemplate: false,
   imports: [
     "react",
-    "react-router",
+    "react-router-dom",
+    {
+      'react-router-dom': [['BrowserRouter','BrowserRouter']]
+    },
     imports,
     flowbiteImports,
     ReactIconsImports,
