@@ -53,6 +53,19 @@
     "ProductlistingResultsLoaded": true,
     "ProductlistingSearchBar": true,
     "ProductlistingSortBy": true,
-    "ProductlistingProductList": true
+    "ProductlistingProductList": true,
+    "ProductsCategoryAndPriceFilter": true,
+    "ProductsIndex": true,
+    "ProductsPaginationBar": true,
+    "ProductsResultsLoaded": true,
+    "ProductsSearchBar": true,
+    "ProductsSortBy": true,
+    "PagesProducts": true,
+    "ProductsList": true,
+    "FaApple": true,
+    "FaFacebookF": true,
+    "FaInstagram": true,
+    "FaTwitter": true,
+    "FaYoutube": true
   }
 }

@@ -1,6 +1,4 @@
-import React from 'react';
 import "@/styles/footer.css";
-import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube, FaApple } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -15,7 +13,7 @@ export default function Footer() {
             <form className="group flex flex-col">
               <input type="text" placeholder="Your Name" className="form px-4 py-2 bg-gray-800 rounded-lg text-white mb-5" />
               <input type="tel" placeholder="Phone Number" className="form px-4 py-2 bg-gray-800 rounded-lg text-white mb-10" />
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-2/5 rounded-lg">Send Request</button>
+              <Button color="blue">Send Request</Button>
             </form>
           </div>
           <p className="font-inter text-xs font-bold leading-4 text-left px-6 pt-10">Privacy</p>

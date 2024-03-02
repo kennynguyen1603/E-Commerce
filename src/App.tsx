@@ -6,7 +6,7 @@ import NotFound from '@/pages/NotFound';
 import { LayoutMain } from '@/layouts/LayoutMain';
 import LayoutAuth from '@/layouts/LayoutAuth';
 import Login from '@/pages/Login';
-import ProductListing from '@/pages/ProductListing';
+import ProductListing from '@/pages/Products';
 function App() {
   return (
     <BrowserRouter>
@@ -14,7 +14,7 @@ function App() {
         <Route element={<LayoutMain/>} >
           <Route path='/' element={<Home/>} />
           <Route path='/home' element={<Home/>} />
-          <Route path='productlist' element={<ProductListing/>} />
+          <Route path='/products' element={<PagesProducts/>} />
         </Route>
         <Route element={<LayoutAuth/>} >
           <Route path='/login' element={<Login/>} />

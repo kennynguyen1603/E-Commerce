@@ -2,6 +2,7 @@ import fg from "fast-glob";
 import { minimatch } from "minimatch";
 import path from "path";
 import autoImportComponentFlowbite from "./auto-import-flowbite";
+import autoImportComponentReactIcons from "./auto-import-react-icons";
 
 function pascalCaseWithCapitals(str) {
   return str
@@ -76,6 +77,7 @@ function getComponentImports(exportDefault = true) {
 
 const imports = getComponentImports(true);
 const flowbiteImports = autoImportComponentFlowbite();
+const ReactIconsImports = autoImportComponentReactIcons();
 
 export const configAutoImport = {
   dts: "./auto-imports.d.ts",
@@ -90,7 +92,13 @@ export const configAutoImport = {
   ],
   dirs: ["./src/hooks"],
   vueTemplate: false,
-  imports: ["react", "react-router", imports, flowbiteImports],
+  imports: [
+    "react",
+    "react-router",
+    imports,
+    flowbiteImports,
+    ReactIconsImports,
+  ],
 };
 console.log(
   "🚀 ~ export  configAutoImport.getComponentImports:",
