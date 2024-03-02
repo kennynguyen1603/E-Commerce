@@ -1,0 +1,11 @@
+.thumbnail {
+  aspect-ratio: 3/2;
+  background-color: transparent;
+  height: 65%;
+}
+
+.product-container {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  height: 350px; /* Thay đổi chiều cao thành giá trị mong muốn */
+}

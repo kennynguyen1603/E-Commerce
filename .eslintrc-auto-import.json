@@ -45,6 +45,14 @@
     "useRoutes": true,
     "useState": true,
     "useSyncExternalStore": true,
-    "useTransition": true
+    "useTransition": true,
+    "PagesProductListing": true,
+    "ProductlistingCategoryAndPriceFilter": true,
+    "ProductlistingPaginationBar": true,
+    "ProductlistingProductListings": true,
+    "ProductlistingResultsLoaded": true,
+    "ProductlistingSearchBar": true,
+    "ProductlistingSortBy": true,
+    "ProductlistingProductList": true
   }
 }

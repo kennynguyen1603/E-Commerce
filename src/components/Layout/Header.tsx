@@ -4,7 +4,7 @@ import { FaApple } from "react-icons/fa6";
 //bg-custom-gradient
 export default function Header() {
   return (
-    <div className="home container mx-auto flex justify-evenly p-5 text-custom-gray items-center font-bold">
+    <div className="home container mx-auto flex justify-around p-5 text-custom-gray items-center font-bold">
       <div className="logo flex items-center space-x-1.5">
         <FaApple />
         <a href='/home'>ex.iphones</a>
