@@ -6,7 +6,6 @@ import NotFound from '@/pages/NotFound';
 import { LayoutMain } from '@/layouts/LayoutMain';
 import LayoutAuth from '@/layouts/LayoutAuth';
 import Login from '@/pages/Login';
-import ProductListing from '@/pages/Products';
 function App() {
   return (
     <BrowserRouter>
