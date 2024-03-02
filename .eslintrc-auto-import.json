@@ -66,6 +66,15 @@
     "FaFacebookF": true,
     "FaInstagram": true,
     "FaTwitter": true,
-    "FaYoutube": true
+    "FaYoutube": true,
+    "Link": true,
+    "NavLink": true,
+    "Navigate": true,
+    "Outlet": true,
+    "Route": true,
+    "Routes": true,
+    "useLinkClickHandler": true,
+    "useSearchParams": true,
+    "BrowserRouter": true
   }
 }
