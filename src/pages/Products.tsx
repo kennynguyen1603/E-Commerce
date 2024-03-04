@@ -1,9 +1,3 @@
-// import React, {useState, useEffect} from 'react'
-// import CategoryAndPriceFilter from '@/components/products/CategoryAndPriceFilter';
-// import ResultsLoaded from '@/components/products/ResultsLoaded';
-// import SearchBar from '@/components/products/SearchBar';
-// import SortBy from '@/components/products/SortBy';
-// import PaginationBar from '@/components/products/PaginationBar';
 import "@/styles/productlisting.css";
 const API_URL = 'https://dummyjson.com/products';
 
@@ -30,16 +24,16 @@ export default function ProductListing() {
 
   return (
     <div className='productListing flex p-10 bg-slate-100'>
-      <div className="sidebar flex-1">
+      <div className="sidebar flex">
         <ProductsCategoryAndPriceFilter />
       </div>
-      <div className="main-content flex-3">
-        <div className="search flex">
+      <div className="main-content flex flex-col">
+        <div className="search flex px">
           <ProductsSearchBar />
           <ProductsSortBy />
           <ProductsResultsLoaded />
         </div>
-        <div className="productList ">
+        <div className="productList">
           <ProductsList products={products}/> 
         </div>
         <ProductsPaginationBar />    

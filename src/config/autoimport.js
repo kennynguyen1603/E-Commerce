@@ -96,7 +96,7 @@ export const configAutoImport = {
     "react",
     "react-router-dom",
     {
-      'react-router-dom': [['BrowserRouter','BrowserRouter']]
+      "react-router-dom": [["BrowserRouter", "BrowserRouter"]],
     },
     imports,
     flowbiteImports,

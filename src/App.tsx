@@ -6,6 +6,7 @@ function App() {
       <Routes>
         <Route element={<LayoutMain />} >
           <Route path='/' element={<PagesHome />} />
+          <Route path='/home' element={<PagesHome />} />
           <Route path='/products' element={<PagesProducts />} />
         </Route>
         <Route element={<LayoutAuth />} >
