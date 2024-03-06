@@ -1,13 +1,13 @@
 import React from 'react'
 
-export default function SortBy() {
+export default function SortBy({sortby}: {sortby: any}) {
   return (
     <div className='sortby'>
+      <label htmlFor="sortby">Sort by</label>
       <select name="sortby" id="sortby">
-        <option value="featured">Featured</option>
         <option value="price">Price</option>
-        <option value="popularity">Popularity</option>
         <option value="rating">Rating</option>
+        <option value="discount">Discount</option>
       </select>
     </div>
   )
