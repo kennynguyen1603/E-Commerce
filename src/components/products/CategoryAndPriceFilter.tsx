@@ -1,26 +1,45 @@
-import React, { useState } from 'react';
+import { union, filter as _filter } from 'lodash';
+import React, { ChangeEvent, MouseEvent, useState } from 'react';
 
 interface CategoryAndPriceFilterProps {
   onFilterChange: any;
+  filter: any
 }
 
-const CategoryAndPriceFilter: React.FC<CategoryAndPriceFilterProps> = ({ onFilterChange }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
+const CategoryAndPriceFilter: React.FC<CategoryAndPriceFilterProps> = ({ filter, onFilterChange }) => {
+  // const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<{ min: number; max: number }>({ min: 0, max: 100000 });
 
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory((prevSelectedCategory) => {
-      const newSelectedCategory = prevSelectedCategory.includes(category)
-        ? prevSelectedCategory.filter((item) => item !== category)
-        : [...prevSelectedCategory, category];
+  const handleCategoryChange = (category: ChangeEvent<HTMLInputElement>) => {
+    // setSelectedCategory((prevSelectedCategory) => {
+    //   const newSelectedCategory = prevSelectedCategory.includes(category)
+    //     ? prevSelectedCategory.filter((item) => item !== category)
+    //     : [...prevSelectedCategory, category];
 
-      onFilterChange((prevFilter: any) => ({
-        ...prevFilter,
-        category: newSelectedCategory,
-      }));
+    //   onFilterChange((prevFilter: any) => ({
+    //     ...prevFilter,
+    //     category: newSelectedCategory,
+    //   }));
 
-      return newSelectedCategory;
-    });
+    //   return newSelectedCategory;
+    // });
+    console.log("🚀 ~ onFilterChange ~ pre:", category.target.checked)
+    if (category.target.checked) {
+      onFilterChange((pre: any) => {
+        return ({
+          ...pre,
+          category: union([...pre.category, category.target.value])
+        });
+      })
+    } else {
+      onFilterChange((pre: any) => {
+        return ({
+          ...pre,
+          category: _filter(pre.category, (i: string) => i !== category.target.value)
+        });
+      })
+    }
+
   };
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,15 +57,15 @@ const CategoryAndPriceFilter: React.FC<CategoryAndPriceFilterProps> = ({ onFilte
   const handleAscOrDesc = () => {
   };
 
-  useEffect(() => {
-    onFilterChange({
-      category: selectedCategory,
-      priceRange: priceRange,
-    });
-  }, [selectedCategory, priceRange, onFilterChange]);
+  // useEffect(() => {
+  //   onFilterChange({
+  //     category: selectedCategory,
+  //     priceRange: priceRange,
+  //   });
+  // }, [selectedCategory, priceRange, onFilterChange]);
 
   const radioPrice = ["All price", "Under 10000$", "10000$ - 20000$", "20000$ - 30000$", "30000$ - 40000$", "40000$ - 50000$", "Above 50000$"];
-  const category = ["Iphone", "IMac", "Macbook"];
+  const category = ["IPhone", "IMac", "MacBook", "Apple Watch"];
 
   return (
     <div className='filter flex flex-col gap-5 fixed'>
@@ -54,8 +73,8 @@ const CategoryAndPriceFilter: React.FC<CategoryAndPriceFilterProps> = ({ onFilte
         <h3 className='uppercase text-gray-400 mb-2 font-medium'>Category</h3>
         <ul className='checkbox-container'>
           {category.map((categoryItem, index) => (
-            <li key={index} onClick={() => handleCategoryChange(categoryItem)}>
-              <input type="checkbox" name="category" id={categoryItem} value={categoryItem} checked={selectedCategory.includes(categoryItem)} onChange={() => handleCategoryChange(categoryItem)} />
+            <li key={index}>
+              <input type="checkbox" onChange={handleCategoryChange} name="category" id={categoryItem} value={categoryItem} checked={filter.category.includes(categoryItem)} />
               <label htmlFor={categoryItem}>{categoryItem}</label>
             </li>
           ))}
