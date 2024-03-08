@@ -37,6 +37,7 @@ declare global {
   const ProductsResultsLoaded: typeof import('@/components/products/ResultsLoaded.tsx')['default']
   const ProductsSearchBar: typeof import('@/components/products/SearchBar.tsx')['default']
   const ProductsSortBy: typeof import('@/components/products/SortBy.tsx')['default']
+  const ProductsTempCodeRunnerFile: typeof import('@/components/products/tempCodeRunnerFile.tsx')['default']
   const Route: typeof import('react-router-dom')['Route']
   const Routes: typeof import('react-router-dom')['Routes']
   const createRef: typeof import('react')['createRef']
