@@ -1,0 +1,13 @@
+*{
+   box-sizing: border-box;
+   border-width: 0;
+   border-style: solid;
+   border-color: #e5e7eb;
+}
+
+.btn-blue {
+   border-radius: .5rem;
+   --tw-bg-opacity: 1;
+   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+   padding: .75rem
+}

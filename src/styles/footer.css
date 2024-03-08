@@ -1,3 +1,12 @@
+*{
+
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: #e5e7eb;
+  border-width: 0;
+
+}
+
 .font-custom {
   color: #3858d6;
   font-family: 'Inter', sans-serif;
@@ -29,4 +38,63 @@
 }
 .text-custom-xs {
   font-size: 10px;
+}
+
+.btn-blue {
+  border-radius: .5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+  padding: .75rem
+}
+
+.btn-blue:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity))
+}
+
+  .navbar-p {
+    margin-bottom: 1.5rem;
+    font-size: 1em;
+    font-weight: 800;
+    text-transform: uppercase;
+    --tw-text-opacity: 1;
+    color: rgb(185 28 28 / var(--tw-text-opacity))
+  }
+
+.navbar-li {
+  cursor: pointer;
+  font-weight: 600
+}
+
+.navbar-li:hover {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity))
+}
+
+ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+}
+
+.text-white{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity)) 
+}
+
+.navbar-span {
+  cursor: pointer;
+  border-radius: 9999px;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+  padding: .5rem
+}
+
+.navbar-span:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity))
 }

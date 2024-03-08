@@ -4,21 +4,22 @@ import { FaApple } from "react-icons/fa6";
 //bg-custom-gradient
 export default function Header() {
   return (
-    <div className="home container mx-auto flex justify-around p-5 text-custom-gray items-center font-bold">
-      <div className="logo flex items-center space-x-1.5">
+    <div className="flex z-10 absolute items-center justify-between py-5 px-5 lg:px-40 font-bold text-gray-500 w-full">
+      <div className="w-7 flex items-center cursor-pointer opacity-70 hover:opacity-100">
         <FaApple />
-        <a href='/home'>ex.iphones</a>
+        <img src="./src/assets/logoGrey-81085dfe.png" alt="Apple logo" />
+        <p>Apple</p>
       </div>
-      <div className="routes flex space-x-6">
-        <a href="/home">Home</a>
-        <a href="/contact">Contact</a>
-        <a href="/about">About</a>
-      </div>
-      <div className="auth flex space-x-2.5">
-        <a href="/login">Login</a>
-        <p>|</p>
-        <a href="/signup">Sign up</a>
+      <div className="hidden lg:flex gap-10">
+        <a aria-current="page" className="hover:text-blue-400 px-2 py-1 active" href="/">Home</a>
+        <a className="hover:text-blue-400 px-2 py-1" href="/contact">Contact</a>
+        <a className="hover:text-blue-400 px-2 py-1" href="/about">About</a>
+      </div><div className="flex sm:gap-6 items-center relative"><a className="hover:text-blue-400 py-1 px-2" href="/login">Login</a>
+        <span className="py-1">|</span>
+        <a className="hover:text-blue-400 py-1 px-2" href="/register">Sign Up</a>
       </div>
     </div>
   );
 }
+
+

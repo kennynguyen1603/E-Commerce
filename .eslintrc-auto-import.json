@@ -75,6 +75,8 @@
     "Routes": true,
     "useLinkClickHandler": true,
     "useSearchParams": true,
-    "BrowserRouter": true
+    "BrowserRouter": true,
+    "PagesSignUp": true,
+    "PagesRegister": true
   }
 }
