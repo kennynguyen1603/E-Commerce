@@ -10,7 +10,7 @@ export default function LandingPart() {
           <p className="font-semibold text-gray-500 text-sm lg:text-lg mb-10 lg:mb-3">Our priority is product excellence, offering a comprehensive range of Apple's lineup, including discontinued items. Don't hesitate, shop now and experience the best of Apple!</p>
           <div className="flex justify-between rounded-2xl py-2 pl-2 lg:pl-5 pr-2 bg-white font-semibold">
             <div className="flex items-center lg:gap-3">
-              <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" className="text-2xl text-blue-600" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+              <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" className="text-2xl text-blue-600" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
 
               </svg>
               <input type="text" placeholder="Find the best product" className="text-black outline-none w-full" />

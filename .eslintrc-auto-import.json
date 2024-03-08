@@ -75,6 +75,9 @@
     "Routes": true,
     "useLinkClickHandler": true,
     "useSearchParams": true,
-    "BrowserRouter": true
+    "BrowserRouter": true,
+    "PagesRegister": true,
+    "ProductsTempCodeRunnerFile": true,
+    "PagesTest": true
   }
 }

@@ -33,6 +33,7 @@ declare global {
   const PagesProducts: typeof import('@/pages/Products.tsx')['default']
   const PagesRegister: typeof import('@/pages/Register.tsx')['default']
   const PagesSignUp: typeof import('@/pages/Register')['default']
+  const PagesTest: typeof import('@/pages/Test.tsx')['default']
   const ProductsCategoryAndPriceFilter: typeof import('@/components/products/CategoryAndPriceFilter.tsx')['default']
   const ProductsList: typeof import('@/components/products/List.tsx')['default']
   const ProductsPaginationBar: typeof import('@/components/products/PaginationBar.tsx')['default']
