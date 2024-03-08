@@ -1,0 +1,21 @@
+div{
+   display: block;
+}
+
+.btn-blue {
+   border-radius: .5rem;
+   --tw-bg-opacity: 1;
+   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+   padding: .75rem
+}
+.bg-color {
+   background: linear-gradient(155deg,#383638 2.06%,#0b0b0b 33.08%)
+}
+
+.bg-color-rev {
+   background: linear-gradient(-15deg,#383638 2.06%,#0b0b0b 33.08%)
+}
+
+.bg-color-two-side {
+   background: linear-gradient(127deg,#383638 3.9%,#0b0b0b 28.86%,#0b0b0b 70.57%,#383638 96.6%)
+}

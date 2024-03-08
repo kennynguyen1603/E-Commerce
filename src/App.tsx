@@ -12,7 +12,7 @@ function App() {
         <Route element={<LayoutAuth />} >
           <Route path='/login' element={<PagesLogin />} />
         </Route>
-        <Route path='/*' element={<PagesNotFound />} />
+        <Route path='/register' element={<PagesNotFound />} />
       </Routes>
     </BrowserRouter>
   );
