@@ -13,7 +13,7 @@ export default function SortBy({onSortBy}: {onSortBy: any}) {
   return (
     <div className='sortby border-gray-950 ml-4 flex items-center space-x-2'>
       <label htmlFor="sortby" className="mr-2">Sort by:</label>
-      <select name="sortby" id="sortby" onChange={handleSortBy} className="text-center">
+      <select name="sortby" id="sortby" onChange={handleSortBy} className="text-center py-1 px-2 rounded-lg text-center">
         {optionSortby.map((option, index) => (
           <option key={index} value={option.value}>{option.name}</option>
         ))}
