@@ -1,6 +1,6 @@
-import {NavLink} from 'react-router-dom'
-import { FaApple } from "react-icons/fa"; 
 import "@/styles/header.less";
+import { FaApple } from "react-icons/fa";
+import { NavLink } from 'react-router-dom';
 export default function Header() {
   const [showHeader, setShowHeader] = useState(true);
 
@@ -38,3 +38,5 @@ export default function Header() {
     </div>
   );
 }
+
+

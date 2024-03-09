@@ -1,0 +1,144 @@
+.Cart {
+  display: flex;
+}
+.Cart .cart-full {
+  margin-left: 100px;
+  background: #ffffff;
+  width: 795px;
+  height: 314px;
+  top: 115px;
+  left: 85px;
+  border: 1px;
+  gap: 18px;
+}
+.Cart .cart-full h1 {
+  height: 60px;
+  position: relative;
+  color: #191c1f;
+  font-family: Public Sans;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 2px solid #e7ebf2;
+}
+.Cart .cart-full .cart-title {
+  display: grid;
+  background: #e4e7e9;
+  align-items: center;
+  grid-template-columns: 3fr 1fr 1fr 1fr;
+  column-gap: 0.5rem;
+  padding: 1rem;
+}
+.Cart .cart-full .cart-items {
+  border-top: 2px solid #e7ebf2;
+  padding: 1rem 0;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 3fr 1fr 1fr 1fr;
+  column-gap: 0.5rem;
+}
+.Cart .cart-full .cart-items .cart-product {
+  display: flex;
+  align-items: center;
+}
+.Cart .cart-full .cart-items .cart-product .btn-del {
+  font-size: 30px;
+}
+.Cart .cart-full .cart-items .cart-product img {
+  width: 72px;
+  height: 71px;
+  max-width: 100%;
+  margin-right: 1rem;
+}
+.Cart .cart-full .cart-items .cart-price span del {
+  color: #8b8e99;
+}
+.Cart .cart-full .cart-items .cart-quantity {
+  display: flex;
+  font-size: 20px;
+  gap: 40px;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 10px;
+}
+.Cart .right {
+  display: flex;
+  flex-direction: column;
+}
+.Cart .right .cart-total {
+  margin: 0 10px;
+  width: 422px;
+  height: 356px;
+  background: #ffffff;
+  padding: 1rem;
+  padding-bottom: 20px;
+}
+.Cart .right .cart-total h3 {
+  font-family: Public Sans;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #191c1f;
+  padding-bottom: 30px;
+}
+.Cart .right .cart-total .content .sub-total {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+.Cart .right .cart-total .content .sub-total p {
+  color: #5f6c72;
+}
+.Cart .right .cart-total .content .Shipping {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+.Cart .right .cart-total .content .Shipping p {
+  color: #5f6c72;
+}
+.Cart .right .cart-total .content .Discount {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+.Cart .right .cart-total .content .Discount p {
+  color: #5f6c72;
+}
+.Cart .right .cart-total .content .Tax {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #e7ebf2;
+  padding-bottom: 20px;
+}
+.Cart .right .cart-total .content .Tax p {
+  color: #5f6c72;
+}
+.Cart .right .cart-total .content .final-total {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+.Cart .coupone-Code {
+  margin: 10px 10px;
+  width: 424px;
+  height: 223.92px;
+  border-radius: 4px;
+  border: 1px;
+  background: #ffffff;
+}
+.Cart .coupone-Code label {
+  font-family: Public Sans;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  border-bottom: 2px solid #e7ebf2;
+  padding: 20px 0px;
+}

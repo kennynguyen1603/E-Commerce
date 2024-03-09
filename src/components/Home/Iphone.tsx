@@ -1,16 +1,35 @@
-import React from 'react'
+import { responsive } from '@/data/dataIphone';
+import axios from 'axios';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { productData, responsive } from '@/data/dataIphone';
-import ProductsIphone from '@/components/products/ProductsIphone'
+import ProductsIphone from '../products/ProductsIphone';
 export default function Iphone() {
-  const product = productData.map(item => (
-    <ProductsIphone
-      name={item.name}
-      url={item.imgUrl}
-      price={item.price}
-      status={item.status} />
-  ))
+  const [products, setProducts] = useState<Product[] | []>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+
+
+  function getData() {
+    axios.get(`${import.meta.env.VITE_API_PRODUCT_BASE}getall`)
+      .then((res: any) => {
+        if (res.data) {
+          const iphones = res.data.filter((p: Product) => p.category === 'IPhone')
+          setProducts(iphones);
+        }
+
+      })
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    getData();
+  }, [])
+
+  if (loading) return <div>Loading... </div>;
+  if (error) return <div>Error!</div>;
+
   return (
     <div className='Iphone' >
       <div className="text">
@@ -28,7 +47,14 @@ export default function Iphone() {
         <h1>Newest ex.iphones. Collection</h1>
         <div className="iPhone-spec">
           <Carousel responsive={responsive}>
-            {product}
+            {products.map((item: Product) => (
+              <ProductsIphone
+                key={item._id}
+                name={item?.name}
+                url={item?.image}
+                price={item?.price}
+                status={true} />
+            ))}
           </Carousel>
         </div>
       </div>
