@@ -8,8 +8,8 @@ export const Newsletter = () => {
           <h1>Subscribe To Newsletter</h1>
           <p>Get free guide about smart watches daily. </p>
           <form>
-            <input type="text" placeholder="Find the best product" />
-            <button>Search</button>
+            <input type="text" placeholder="Enter Email Adress" />
+            <button>Subscribe</button>
           </form>
         </div>
         <img

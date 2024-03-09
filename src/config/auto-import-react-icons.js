@@ -4,9 +4,10 @@ const component = [
   "FaTwitter",
   "FaYoutube",
   "FaApple",
+  "FaDeleteLeft"
 ];
 
-export default function autoImportComponentFlowbite() {
+export default function autoImportComponentReactIcons() {
   return {
     "react-icons/fa": component.reduce((pre, cur) => {
       pre.push([cur, cur]);
