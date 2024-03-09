@@ -1,21 +1,20 @@
-import Footer from "@/components/Layout/Footer";
-import Header from "@/components/Layout/Header";
+import '@/styles/About.css'
 
 export default function About() {
    return (<>
-      <Header />
+
       <div className="bg-gray-100 py-20 px-10 lg:px-20 text-gray-400">
          <div className="text-center">
-            <h1 className="text-3xl lg:text-6xl mt-5 lg:my-5 font-bold">About Apple</h1>
+            <h1 className="text-3xl lg:text-6xl mt-5 lg:my-5 font-bold">About Us</h1>
             <div className="flex justify-center gap-2 lg:gap-10 mt-5 lg:my-10">
-               <p className="font-bold">Feyz Ibrahim</p>
+               <p className="font-bold">Tim Cook</p>
                <p>|</p>
                <p>20 September 2023</p>
             </div>
             <p className="lg:px-40 my-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac ultrices odio. Nulla at congue diam, at dignissim turpis. Ut vehicula sed velit a faucibus. In feugiat vestibulum velit vel pulvinar.</p>
             <div className="relative flex flex-col items-center">
                <img src="./src/assets/aboutBG-cda6d5eb.png" alt="AboutBG" />
-               <img src="/src/assets/logoGrey-81085dfe.png" alt="ex.iphones. Logo" className="w-3/12 xl:w-2/12 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+               <img src="./src/assets/logoGrey-81085dfe.png" alt="ex.iphones. Logo" className="w-3/12 xl:w-2/12 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
             </div>
          </div>
          <div className="lg:px-20 lg:flex"><div>
@@ -23,7 +22,7 @@ export default function About() {
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac ultrices odio. Nulla at congue diam, at dignissim turpis. Ut vehicula sed velit a faucibus. In feugiat vestibulum velit vel pulvinar. Fusce id mollis ex. Praesent feugiat elementum ex ut suscipit.</p>
             <h1 className="about-h1">Things we take for granted</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac ultrices odio. Nulla at congue diam, at dignissim turpis. Ut vehicula sed velit a faucibus. In feugiat vestibulum velit vel pulvinar. Fusce id mollis ex. Praesent feugiat elementum ex ut suscipit.</p>
-            <h1 className="about-h1">Future of ex.iphones.</h1>
+            <h1 className="about-h1">Our Future</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac ultrices odio. Nulla at congue diam, at dignissim turpis. Ut vehicula sed velit a faucibus. In feugiat vestibulum velit vel pulvinar. Fusce id mollis ex. Praesent feugiat elementum ex ut suscipit.</p>
             <h1 className="about-h1">Something nobody knows about us</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac ultrices odio. Nulla at congue diam, at dignissim turpis. Ut vehicula sed velit a faucibus. In feugiat vestibulum velit vel pulvinar. Fusce id mollis ex. Praesent feugiat elementum ex ut suscipit.</p>
@@ -49,7 +48,6 @@ export default function About() {
             </div>
          </div>
       </div>
-      <Footer />
    </>
    )
 }
