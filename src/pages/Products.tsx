@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import _ from 'lodash';
 import "@/styles/products.css";
+import axios from 'axios';
 const API_URL = 'https://apimainproject.vercel.app/product/getall';
 import { filter as _filter, isEmpty, orderBy } from 'lodash'
 
@@ -21,6 +22,7 @@ export default function Products() {
   const [totalProducts, setTotalProducts] = useState(0);
   const [filterProducts, setFilterProducts] = useState(0);
 
+
   const [filter, setFilter] = useState<Filter>({
     category: [],
     priceRange: { min: 0, max: 100000 },
@@ -31,15 +33,23 @@ export default function Products() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(API_URL)
-      .then(response => response.json())
-      .then(data => {
-        setProducts(data);
-        setTotalProducts(data.length);
+    axios.get(`${import.meta.env.VITE_API_PRODUCT_BASE}getall`)
+      .then((res: any) => {
+        setProducts(res.data);
+        setTotalProducts(res.data.length);
         setLoading(false);
       })
       .catch(setError)
       .finally(() => setLoading(false));
+    // fetch(`${import.meta.env.VITE_API_PRODUCT_BASE}getall`)
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     setProducts(data);
+    //     setTotalProducts(data.length);
+    //     setLoading(false);
+    //   })
+    //   .catch(setError)
+    //   .finally(() => setLoading(false));
   }, []);
 
   function productFilter(): Product[] {
@@ -63,15 +73,15 @@ export default function Products() {
   useEffect(() => {
     setFilterProducts(productFilter().length);
     console.log(productFilter());
-},[filter])  
+  }, [filter])
 
-//tối ưu hóa hiệu suất và tránh việc tìm kiếm không cần thiết
+  //tối ưu hóa hiệu suất và tránh việc tìm kiếm không cần thiết
   const handleSearchChange = useCallback(_.debounce((newSearchValue) => {
-  setFilter((prevFilter) => ({
-    ...prevFilter,
-    search: newSearchValue
-  }));
-}, 300), []);
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      search: newSearchValue
+    }));
+  }, 300), []);
 
   const debouncedSearchChange = _.debounce(handleSearchChange, 300);
 
