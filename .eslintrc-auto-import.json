@@ -76,6 +76,13 @@
     "useLinkClickHandler": true,
     "useSearchParams": true,
     "BrowserRouter": true,
+    "ProductsProductsIphone": true,
+    "ProductsProductsApplewatch": true,
+    "PagesCart": true,
+    "CiCircleRemove ": true,
+    "CiCircleRemove": true,
+    "FaDeleteLeft ": true,
+    "FaDeleteLeft": true,
     "ProductsTempCodeRunnerFile": true
   }
 }

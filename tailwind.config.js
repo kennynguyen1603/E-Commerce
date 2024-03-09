@@ -16,7 +16,7 @@ export default {
       },
     },
     fontFamily: {
-      inter: ["Inter", "sans-serif"],
+      inter: ["poppins", "sans-serif"],
     },
   },
   plugins: [import("flowbite/plugin")],
