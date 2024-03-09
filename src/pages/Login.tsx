@@ -4,9 +4,11 @@ import Header from '@/components/Layout/Header';
 
 
 export default function Login() {
+  const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
   return (
     <>
-      <div style={{ position: "fixed", zIndex: "9999", inset: "16px", pointerEvents: "none" }}>
+      <div>
         <Header />
         <div className="py-20 bg-gray-100 lg:flex lg:items-center text-gray-500">
           <div className="lg:w-1/2"><img src="./src/assets/LoginBG-89b402e9.png" alt="LoginBG" /></div>
@@ -16,7 +18,7 @@ export default function Login() {
               <p className="text-3xl font-bold">Apple</p>
             </div>
             <h1 className="text-2xl my-5 font-bold">Login</h1>
-            <form action="#" className="w-full">
+            <div className="w-full">
               <div>
                 <label htmlFor="username">Email</label>
                 <div className="flex items-center">
@@ -32,7 +34,7 @@ export default function Login() {
                     >
                     </svg>
                   </div>
-                  <input name="email" placeholder="Enter your email" className="sign-up-input w-full" value="" />
+                  <input name="email" placeholder="Enter your email" onChange={(e) => setName(e.target.value)} value={name} className="sign-up-input w-full" />
                 </div>
               </div>
               <div>
@@ -50,7 +52,7 @@ export default function Login() {
                     >
                     </svg>
                   </div>
-                  <input name="password" placeholder="Enter your password" type="password" className="sign-up-input-y w-full" value="" />
+                  <input name="password" onChange={(e) => setPassword(e.target.value)} value={password} placeholder="Enter your password" type="password" className="sign-up-input-y w-full" />
                   <div className="sign-up-icon-rev">
                     <svg
                       stroke="currentColor"
@@ -65,8 +67,8 @@ export default function Login() {
                   </div>
                 </div>
               </div>
-              <button type="submit" className="btn-blue text-white w-full mt-5">Login</button>
-            </form>
+              <button type="submit" className="btn-blue w-full mt-5">Login</button>
+            </div>
             <div className="text-center">
               <a href="/forgot-password" className="my-5 text-blue-600 font-bold cursor-pointer hover:text-blue-500">Forgot Password?</a>
               <p className="my-4">OR</p>

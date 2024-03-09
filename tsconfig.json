@@ -28,17 +28,22 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "*": [
+        "types.d.ts"
       ]
     },
     "types": [
       "vite-plugin-svgr/client",
-      "./auto-imports.d.ts"
+      "./auto-imports.d.ts",
+      "./src/types/types.d.ts"
     ],
   },
   "include": [
     "src",
     "src/config/autoimport.js",
-    "./auto-imports.d.ts"
+    "./auto-imports.d.ts",
+    "./src/types/types.d.ts"
   ],
   "references": [
     {
