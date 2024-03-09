@@ -1,64 +1,105 @@
-import React, { useState, useEffect } from 'react';
-import ProductProvider from "@/context/ProductContext";
+import { useState, useEffect, useCallback } from 'react';
+import _ from 'lodash';
 import "@/styles/products.css";
 const API_URL = 'https://apimainproject.vercel.app/product/getall';
+import { filter as _filter, isEmpty, orderBy } from 'lodash'
+
+type SortByType = 'price' | 'rating' | 'name';
 
 interface Filter {
   category: string[],
-  price: number,
+  priceRange: { min: number, max: number },
   search: string,
-  sortBy: any,
-  order: string
+  sortBy: SortByType,
+  order: 'asc' | 'desc'
 }
 
+export default function Products() {
+  const [products, setProducts] = useState<Product[] | []>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [filterProducts, setFilterProducts] = useState(0);
 
-export default function ProductListing() {
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-
-  const [filter, setFilter] = useState({
-  category: [],
-  price: 0,
-  search: '',
-  sortBy: 'price',
-  order: 'asc' // Assuming this was intended to be part of the filter
-});
+  const [filter, setFilter] = useState<Filter>({
+    category: [],
+    priceRange: { min: 0, max: 100000 },
+    search: '',
+    sortBy: 'price',
+    order: 'asc'
+  });
 
   useEffect(() => {
+    setLoading(true);
     fetch(API_URL)
       .then(response => response.json())
       .then(data => {
-        setProducts(data)
-        setLoading(false)
+        setProducts(data);
+        setTotalProducts(data.length);
+        setLoading(false);
       })
-      .catch(error => {
-        setError(error)
-        setLoading(false)
-      })
-  }, [])
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, []);
 
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>Error: {error}</div>   
+  function productFilter(): Product[] {
+    const {
+      category,
+      priceRange,
+      search,
+      sortBy,
+      order
+    } = filter
+
+    const dataFilter: Product[] = _filter(products, (i: Product) => {
+      const coCate = isEmpty(category) || category.includes(i.category)
+      const coPri = i.price >= priceRange.min && i.price <= priceRange.max
+      const coSearch = !search || i.name.toLowerCase().includes(search.toLowerCase());
+      return coCate && coPri && coSearch
+    })
+    return sortBy ? orderBy(dataFilter, [sortBy, order]) : dataFilter
+  }
+
+  useEffect(() => {
+    setFilterProducts(productFilter().length);
+    console.log(productFilter());
+},[filter])  
+
+//tối ưu hóa hiệu suất và tránh việc tìm kiếm không cần thiết
+  const handleSearchChange = useCallback(_.debounce((newSearchValue) => {
+  setFilter((prevFilter) => ({
+    ...prevFilter,
+    search: newSearchValue
+  }));
+}, 300), []);
+
+  const debouncedSearchChange = _.debounce(handleSearchChange, 300);
+
+  if (loading) return <div>Loading... <button onClick={() => setFilter(filter)}>Retry</button></div>;
+  if (error) return <div>Error: {(error as Error).message} <button onClick={() => setFilter(filter)}>Retry</button></div>;
 
   return (
-    <ProductProvider value={{filter, products, setProducts, setFilter}}>
-      <div className='productListing flex px-14 py-8 bg-slate-100'>
+    <div className='productListing flex px-14 py-8 bg-slate-100'>
       <div className="sidebar flex">
-        <ProductsCategoryAndPriceFilter categoryandprice={setFilter}/>
+        <ProductsCategoryAndPriceFilter filter={filter} onFilterChange={setFilter} />
       </div>
       <div className="list flex flex-col justify-center pr-4">
-        <div className="search flex">
-          <ProductsSearchBar search={setFilter}/>
-          <ProductsSortBy sortby={setFilter}/>
-          <ProductsResultsLoaded products={products}/>
+        <div className="search flex flex-wrap justify-between items-center ml-2 mb-4">
+          <div className='flex w-3/4 items-center text-center'>
+            <ProductsSearchBar onSearch={debouncedSearchChange} />
+            <ProductsSortBy onSortBy={setFilter} />
+          </div>
+          <div className='w-1/4'>
+            <p>
+              {filter.category.length === 0 ? `${products.length}` : `${filterProducts}`} Results Loaded of {totalProducts}
+            </p>
+          </div>
         </div>
         <div className="productList">
-          <ProductsList products={products}/> 
+          <ProductsList products={productFilter()} />
         </div>
-        <ProductsPaginationBar />    
+        <ProductsPaginationBar />
       </div>
     </div>
-    </ProductProvider>
-  )
+  );
 }
