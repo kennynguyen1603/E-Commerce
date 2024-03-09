@@ -8,6 +8,37 @@ div{
    background-color: rgb(37 99 235 / var(--tw-bg-opacity));
    padding: .75rem
 }
-.bg-color {
-   background: linear-gradient(155deg,#383638 2.06%,#0b0b0b 33.08%)
+
+.my-5 {
+   margin-top: 1.25rem;
+   margin-bottom: 1.25rem
 }
+
+.sign-up-input {
+   border-radius: 10px;
+   border-top-width: 1px;
+   border-bottom-width: 1px;
+   border-inline-end-width:1px;
+   --tw-border-opacity: 1;
+   border-color: rgb(229 231 235 / var(--tw-border-opacity));
+   --tw-bg-opacity: 1;
+   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+   padding: .5rem;
+   outline: 2px solid transparent;
+   outline-offset: 2px;
+}
+
+.sign-up-input-y {
+   border-radius: 10px;
+   border-top-width: 1px;
+   border-bottom-width: 1px;
+   --tw-border-opacity: 1;
+   border-color: rgb(229 231 235 / var(--tw-border-opacity));
+   --tw-bg-opacity: 1;
+   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+   padding: .5rem;
+   outline: 2px solid transparent;
+   outline-offset: 2px;
+}
+
+
