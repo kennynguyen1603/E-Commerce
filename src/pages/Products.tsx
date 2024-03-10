@@ -24,7 +24,7 @@ export default function Products() {
 
   const [filter, setFilter] = useState<Filter>({
     category: [],
-    priceRange: { min: 0, max: 100000 },
+    priceRange: { min: 0, max: 50000 },
     search: '',
     sortBy: 'popular',
     order: 'asc'
