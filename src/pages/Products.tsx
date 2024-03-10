@@ -62,7 +62,7 @@ export default function Products() {
 
   useEffect(() => {
     setFilterProducts(productFilter().length);
-    console.log(filter);
+    console.log(productFilter());
   }, [filter])
 
   //tối ưu hóa hiệu suất và tránh việc tìm kiếm không cần thiết

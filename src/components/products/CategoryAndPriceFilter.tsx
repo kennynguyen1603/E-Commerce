@@ -1,5 +1,5 @@
 import { union, filter as _filter, max } from 'lodash';
-import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 
 interface CategoryAndPriceFilterProps {
   onFilterChange: any;
@@ -42,13 +42,11 @@ const CategoryAndPriceFilter: React.FC<CategoryAndPriceFilterProps> = ({ filter,
         ...prevPriceRange,
         max: newMaxPrice,
     }));
-
     }
   };
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const selectedIndex = parseInt(e.target.value, 10);
-  console.log(selectedIndex);
   const selectedPriceRange = radioPrice[selectedIndex];
   
   if (selectedPriceRange) {
@@ -61,10 +59,6 @@ const CategoryAndPriceFilter: React.FC<CategoryAndPriceFilterProps> = ({ filter,
     setPriceRange({ min: selectedPriceRange.min, max: selectedPriceRange.max });
   }
 };
-
-  // useEffect(() => {
-  //   console.log(handleRadioChange);
-  // }, [priceRange]);
 
   const radioPrice = [
     {nameValue: "All price",
@@ -96,6 +90,9 @@ const CategoryAndPriceFilter: React.FC<CategoryAndPriceFilterProps> = ({ filter,
     max: 100000
     },
   ];
+
+  const radioRef = useRef(null);
+
   const category = ["IPhone", "IMac", "MacBook", "Apple Watch"];
 
   return (
@@ -104,9 +101,9 @@ const CategoryAndPriceFilter: React.FC<CategoryAndPriceFilterProps> = ({ filter,
         <h3 className='uppercase text-gray-400 mb-2 font-medium'>Category</h3>
         <ul className='checkbox-container'>
           {category.map((categoryItem, index) => (
-            <li key={index}>
+            <li key={index} className='mb-1'>
               <input type="checkbox" onChange={handleCategoryChange} name="category" id={categoryItem} value={categoryItem} checked={filter.category.includes(categoryItem)} />
-              <label htmlFor={categoryItem}>{categoryItem}</label>
+              <label htmlFor={categoryItem} className='ml-2'>{categoryItem}</label>
             </li>
           ))}
         </ul>
@@ -127,9 +124,9 @@ const CategoryAndPriceFilter: React.FC<CategoryAndPriceFilterProps> = ({ filter,
       <div className="radio">
         <div className='uppercase text-gray-400 mb-2 font-medium'>PRICE FILTERS</div>
         {radioPrice.map((price, index) => (
-          <div key={index}>
-            <input type="radio" name="price" id={price.nameValue + index} value={index} onChange={handleRadioChange} />
-            <label htmlFor={price.nameValue + index}>{price.nameValue}</label>
+          <div key={index} className='mb-2'>
+            <input type="radio" ref={radioRef} name="price" id={price.nameValue + index} value={index} onChange={handleRadioChange} />
+            <label htmlFor={price.nameValue + index} className='ml-2'>{price.nameValue}</label>
           </div>
         ))} 
       </div>   
