@@ -1,5 +1,3 @@
-import Footer from '@/components/Layout/Footer';
-import Header from '@/components/Layout/Header';
 import '@/styles/Login.css'
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
@@ -27,7 +25,7 @@ export default function Login() {
   return (
     <>
       <div>
-        <Header />
+        <LayoutHeader />
         <div className="py-20 bg-gray-100 lg:flex lg:items-center text-gray-500">
           <div className="lg:w-1/2"><img src="./src/assets/LoginBG-89b402e9.png" alt="LoginBG" /></div>
           <div className="lg:w-1/2 p-5 mx-10 lg:mx-20 lg:p-10 border border-gray-300 rounded-3xl">
@@ -71,7 +69,7 @@ export default function Login() {
             </p>
           </div>
         </div>
-        <Footer />
+        <LayoutFooter />
       </div>
 
     </>

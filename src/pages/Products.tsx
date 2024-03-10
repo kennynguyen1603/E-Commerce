@@ -1,11 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import _ from 'lodash';
-import "@/styles/products.css";
+import "@/styles/products.less";
 import axios from 'axios';
-const API_URL = 'https://apimainproject.vercel.app/product/getall';
 import { filter as _filter, isEmpty, orderBy } from 'lodash'
 
-type SortByType = 'price' | 'rating' | 'name';
+type SortByType = 'price' | 'rating' | 'popular' | 'newest';
 
 interface Filter {
   category: string[],
@@ -27,7 +26,7 @@ export default function Products() {
     category: [],
     priceRange: { min: 0, max: 100000 },
     search: '',
-    sortBy: 'price',
+    sortBy: 'popular',
     order: 'asc'
   });
 
@@ -41,15 +40,6 @@ export default function Products() {
       })
       .catch(setError)
       .finally(() => setLoading(false));
-    // fetch(`${import.meta.env.VITE_API_PRODUCT_BASE}getall`)
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     setProducts(data);
-    //     setTotalProducts(data.length);
-    //     setLoading(false);
-    //   })
-    //   .catch(setError)
-    //   .finally(() => setLoading(false));
   }, []);
 
   function productFilter(): Product[] {
@@ -72,7 +62,7 @@ export default function Products() {
 
   useEffect(() => {
     setFilterProducts(productFilter().length);
-    console.log(productFilter());
+    console.log(filter);
   }, [filter])
 
   //tối ưu hóa hiệu suất và tránh việc tìm kiếm không cần thiết

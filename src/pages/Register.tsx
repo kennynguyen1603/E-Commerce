@@ -1,10 +1,7 @@
-import Footer from "@/components/Layout/Footer";
-import Header from "@/components/Layout/Header";
-
 export default function Register() {
   return (
     <div>
-      <Header />
+      <LayoutHeader />
       <div className="py-20 bg-gray-100 lg:flex  text-gray-500">
         <div className="lg:w-1/2">
           <img src="./src/assets/SignUpBG-b4a0a94c.png" alt="SignUpBG" />
@@ -105,7 +102,7 @@ export default function Register() {
           </div>
         </div>
       </div>
-      <Footer />
+      <LayoutFooter />
     </div>
   )
 }
