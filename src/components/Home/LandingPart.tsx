@@ -1,26 +1,20 @@
 import React from 'react'
-import "@/styles/LandingPart.css";
-
+import { CiSearch } from "react-icons/ci";
 export default function LandingPart() {
   return (
-    <>
-      <div className="lg:h-screen bg-color lg:flex lg:items-center overflow-clip">
-        <div className="lg:w-1/2 flex-shrink-0 text-white pt-32 px-10 lg:pl-48 ">
-          <h1 className="text-4xl lg:text-6xl font-bold mb-6">Discover premium, dependable, and budget-friendly Apple products here</h1>
-          <p className="font-semibold text-gray-500 text-sm lg:text-lg mb-10 lg:mb-3">Our priority is product excellence, offering a comprehensive range of Apple's lineup, including discontinued items. Don't hesitate, shop now and experience the best of Apple!</p>
-          <div className="flex justify-between rounded-2xl py-2 pl-2 lg:pl-5 pr-2 bg-white font-semibold">
-            <div className="flex items-center lg:gap-3">
-              <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" className="text-2xl text-blue-600" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-
-              </svg>
-              <input type="text" placeholder="Find the best product" className="text-black outline-none w-full" />
-            </div>
-            <button className="btn-blue">Search</button>
-          </div>
-        </div>
-        <img src="./src/assets/iphone-fde203ab.png" className="lg:w-[1200px] lg:-ml-32 lg:mt-16" alt="Bg Image" />
+    <div className="LandingPart">
+      <div className="content">
+        <h1>Discover Most Affordable Apple products</h1>
+        <p>Find the best, reliable and affordable apple products here. We focus on the product quality. Here you can find all the products apple ever made. Even the products apple officially stopped selling. So why you are waiting? Just order now!</p>
+        <form>
+          <input type="text" placeholder='Find the best product' />
+          <CiSearch className='search' />
+          <button>Search</button>
+        </form>
       </div>
-
-    </>
+      <div className="img-iphone">
+        <img src="https://s3-alpha-sig.figma.com/img/fc26/57b6/d0eb878086e0c38adfa66ff641c5f1fe?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YNUaFSD0IdktjvGNx6elZtBabvvIOv~e8sNpix-ihMFn7sl-sOH2MW23LBRD91xRrUt1tlU752F3lU0MF9M0Q4c1rzxemjRA2B4Ioz3y3--avq9cbFlGxbFcEi0mFo1IDRVnOpOBp37kcBMC9lzGllbI6L6J9HXm0~nuGeYtlpwxyhoeOPg-SsHrB0Kwv~hXyVXfOy9EpCyjJxd-2zB3q81Y7~CMVso345pzHOEgpmEN3Sk8GuS1tVzmbNLODluJPzp74QJ8P5lzNO2ATO1sVk5pIR~xVBnoljESWxwLpWtQdtJ9h-Zv8Ys6N9DtKyDR-mKoez2bFRxoEnmP8zDgAA__" alt="" />
+      </div>
+    </div>
   )
 }
