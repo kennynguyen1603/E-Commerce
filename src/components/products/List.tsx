@@ -1,6 +1,9 @@
 import React from 'react';
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { AuthContext } from '@/context/AuthContext';
+import { convertDataProductAddToCart } from '@/utils/product';
+import { addToCartServer } from '@/services/cart';
+import { logout } from '@/services/auth';
 
 interface ProductListProps {
   products: Product[];
@@ -8,47 +11,57 @@ interface ProductListProps {
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
   const authContext = useContext<any>(AuthContext)
+  const navigate = useNavigate();
+  let location = useLocation();
 
   const addToWishlist = (productId: string) => {
-  const isProductInWishlist = authContext.wishlist.some((item: { productId: string; }) => item.productId === productId);
+    const isProductInWishlist = authContext.wishlist.some((item: { productId: string; }) => item.productId === productId);
 
-  if (isProductInWishlist) {
-    const updatedWishlist = authContext.wishlist.filter((item: { productId: string; })=> item.productId !== productId);
-    authContext.setWishlist(updatedWishlist);
-  } else {
-    const productToAdd = products.find(product => product._id === productId);
-    if (productToAdd) {
-      const newWishlistItem = {
-        productId: productToAdd._id,
-        title: productToAdd.name,
-        price: productToAdd.price,
-        quantity: 1,
-        stock: productToAdd.stock,
-        thumbnail: productToAdd.image,
-        category: productToAdd.category,
-        image: productToAdd.image
-      };
-      authContext.setWishlist([...authContext.wishlist, newWishlistItem]);
+    if (isProductInWishlist) {
+      const updatedWishlist = authContext.wishlist.filter((item: { productId: string; }) => item.productId !== productId);
+      authContext.setWishlist(updatedWishlist);
+    } else {
+      const productToAdd = products.find(product => product._id === productId);
+      if (productToAdd) {
+        const newWishlistItem = {
+          productId: productToAdd._id,
+          title: productToAdd.name,
+          price: productToAdd.price,
+          quantity: 1,
+          stock: productToAdd.stock,
+          thumbnail: productToAdd.image,
+          category: productToAdd.category,
+          image: productToAdd.image
+        };
+        authContext.setWishlist([...authContext.wishlist, newWishlistItem]);
+      }
     }
-  }
-};
+  };
 
   function addToCart(productId: string) {
+
+    if (!authContext?.infoUser?.accessToken)
+      navigate(`/login?redirect=${location.pathname}`,)
+
+
     const product = products.find((product) => product._id === productId);
     const isProductInCart = authContext.cartItems.some((item: { productId: string; }) => item.productId === productId);
-    if(product && !isProductInCart) {
-      authContext.setCartItems([...authContext.cartItems, {
-        productId: product._id,
-        title: product.name,
-        price: product.price,
-        qantity: 1,
-        stock: product.stock,
-        thumbnail: product.image,
-        category: product.category,
-        image: product.image
-      }]);
+    if (product && !isProductInCart) {
+      const cartItemsSave: cartItemsServerType[] = convertDataProductAddToCart(authContext.cartItems, product)
+      addToCartServer(cartItemsSave)
+        .then(() => {
+          authContext.setCartItems()
+        })
+        .catch(() => {
+          logout();
+          navigate(`/login?redirect=${location.pathname}`)
+        })
     }
   }
+
+  useEffect(() => {
+    console.log("🚀 ~ addToCart ~ authContext:", authContext.cartItems)
+  }, [authContext.cartItems])
 
   return (
     <div className='showList p-2'>
@@ -56,9 +69,9 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
         products.map((product) => (
           <div key={product._id} className='flex flex-col items-center bg-white p-5 product-container cursor-pointer relative'>
             {authContext.wishlist.some((item: { productId: string; }) => item.productId === product._id) ? (
-              <IoMdHeart className='text-red-500 absolute right-3 top-4 text-xl' onClick={() => addToWishlist(product._id)}/>
+              <IoMdHeart className='text-red-500 absolute right-3 top-4 text-xl' onClick={() => addToWishlist(product._id)} />
             ) : (
-              <IoMdHeartEmpty className='text-red-500 absolute right-3 top-4 text-xl' onClick={() => addToWishlist(product._id)}/>
+              <IoMdHeartEmpty className='text-red-500 absolute right-3 top-4 text-xl' onClick={() => addToWishlist(product._id)} />
             )}
             <img src={product.image} alt={product.name} className='thumbnail w-auto' />
             <h2 className='text-center mt-2 whitespace-normal w-44 text-sm'>{product.name}</h2>

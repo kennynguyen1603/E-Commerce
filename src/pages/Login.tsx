@@ -1,15 +1,21 @@
-import '@/styles/Login.css'
-import axios from 'axios';
+import { updateAuthorization } from '@/config/axios';
 import { AuthContext } from '@/context/AuthContext';
+import '@/styles/Login.css';
+import { saveInfoToLocalStorage } from '@/utils/product';
+import axios from 'axios';
 
 
 export default function Login() {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
   const authContext = useContext<any>(AuthContext)
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
   function onLogin() {
     if (name && password) {
+      setLoading(true)
       axios.post(`${import.meta.env.VITE_API_BACKEND_BASE}auth/login`, {
         email: name,
         password: password
@@ -17,7 +23,20 @@ export default function Login() {
         .then((res) => {
           if (res) {
             authContext.setInfoUser(res.data)
+            if (res?.data?.accessToken) {
+              // Axios.defaults.headers.common['Authorization'] = `Bearer ${res?.data?.accessToken}`
+
+              updateAuthorization(res.data.accessToken)
+              saveInfoToLocalStorage(res.data as InfoUserType)
+
+              // localStorage.setItem('infoUser', JSON.stringify(res.data))
+              navigate(searchParams.get('redirect') || '')
+              console.log("🚀 ~ .then ~ location:", searchParams.get('redirect'))
+            }
           }
+        })
+        .finally(() => {
+          setLoading(false)
         })
     }
   }
@@ -49,7 +68,7 @@ export default function Login() {
 
                 </div>
               </div>
-              <button type="submit" className="btn-blue w-full mt-5" onClick={onLogin}>Login</button>
+              <button type="submit" disabled={loading} className="btn-blue w-full mt-5" onClick={onLogin}>Login</button>
             </div>
             <div className="text-center">
               <a href="/forgot-password" className="my-5 text-blue-600 font-bold cursor-pointer hover:text-blue-500">Forgot Password?</a>
