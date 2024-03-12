@@ -1,7 +1,6 @@
 import '@/styles/Login.css'
 import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
-
+import { AuthContext } from '@/context/AuthContext';
 
 
 export default function Login() {
