@@ -3,7 +3,7 @@ import "@/styles/LandingPart.css";
 
 export default function LandingPart() {
   return (
-    <>
+    <div>
       <div className="lg:h-screen bg-color lg:flex lg:items-center overflow-clip">
         <div className="lg:w-1/2 flex-shrink-0 text-white pt-32 px-10 lg:pl-48 ">
           <h1 className="text-4xl lg:text-6xl font-bold mb-6">Discover premium, dependable, and budget-friendly Apple products here</h1>
@@ -21,6 +21,6 @@ export default function LandingPart() {
         <img src="./src/assets/iphone-fde203ab.png" className="lg:w-[1200px] lg:-ml-32 lg:mt-16" alt="Bg Image" />
       </div>
 
-    </>
+    </div>
   )
 }

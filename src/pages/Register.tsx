@@ -1,4 +1,47 @@
+import '@/styles/Register.css'
+import React,{ useState, useEffect } from 'react'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+
+
+
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 export default function Register() {
+  const [formData, setFormData] = useState<FormData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('formData');
+    if (storedData) {
+      setFormData(JSON.parse(storedData));
+    }
+  }, []);
+
+  const initialValues: FormData = {
+    firstName: '',
+    lastName: '',
+    email: '',
+  };
+
+  const validationSchema = Yup.object({
+    firstName: Yup.string().required('Required'),
+    lastName: Yup.string().required('Required'),
+    email: Yup.string().email('Invalid email address').required('Required'),
+  });
+
+  const handleSubmit = (values: FormData) => {
+    localStorage.setItem('formData', JSON.stringify(values));
+    // handle form submission
+  };
+
   return (
     <div>
       <LayoutHeader />
@@ -12,66 +55,76 @@ export default function Register() {
             <p className="text-3xl font-bold">Apple</p>
           </div>
           <h1 className="text-2xl my-5 font-bold">Sign Up</h1>
-          <form action="#" className="w-full">
-            <div className="flex justify-center">
-              <div className="h-64 w-64 border-dashed border-2 rounded-lg text-center bg-gray-100 border-gray-200">
-                <div className="flex items-center justify-center h-full p-8">
-                  <div>
-                    <div className="flex justify-center">
-                      <span className="text-white text-lg bg-blue-700 p-3 rounded-lg">
-                        <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+          <Formik
+            initialValues={formData || initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >{({ isSubmitting }) => (
+            <Form className="w-full">
+              <div className="flex justify-center">
+                <div className="h-64 w-64 border-dashed border-2 rounded-lg text-center bg-gray-100 border-gray-200">
+                  <div className="flex items-center justify-center h-full p-8">
+                    <div>
+                      <div className="flex justify-center">
+                        <span className="text-white text-lg bg-blue-700 p-3 rounded-lg">
+                          <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
 
-                        </svg>
-                      </span>
+                          </svg>
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-400 my-2">Drag and drop an image here, or click to upload</p>
+                      <button type="button" className="bg-zinc-200 text-blue-600 text-sm font-semibold py-2 px-4 rounded">Upload Image</button>
+                      <input type="file" accept="image/*" className="hidden" />
                     </div>
-                    <p className="text-sm text-gray-400 my-2">Drag and drop an image here, or click to upload</p>
-                    <button type="button" className="bg-zinc-200 text-blue-600 text-sm font-semibold py-2 px-4 rounded">Upload Image</button>
-                    <input type="file" accept="image/*" className="hidden" />
                   </div>
                 </div>
               </div>
-            </div>
-            <div>
-              <p>
-                <label htmlFor="username">First Name</label>
-              </p>
-              <div className="flex items-center">
-                <div className="sign-up-icon">
-                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+              <div>
+                <p>
+                  <label htmlFor="username">First Name</label>
+                </p>
+                <div className="flex items-center">
+                  <div className="sign-up-icon">
+                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
 
-                  </svg>
+                    </svg>
+                  </div>
+                  <Field type="text" name="firstName" placeholder="Enter your first name" className="sign-up-input w-full" values="" />
+                  <ErrorMessage name="firstName" component="div" className="error-message" />
                 </div>
-                <input name="firstName" placeholder="Enter your first name" className="sign-up-input w-full" value="" />
               </div>
-            </div>
-            <div>
-              <p>
-                <label htmlFor="username">Last Name</label>
-              </p>
-              <div className="flex items-center">
-                <div className="sign-up-icon">
-                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+              <div>
+                <p>
+                  <label htmlFor="username">Last Name</label>
+                </p>
+                <div className="flex items-center">
+                  <div className="sign-up-icon">
+                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
 
-                  </svg>
+                    </svg>
+                  </div>
+                  <Field type="text" name="lastName" placeholder="Enter your last name" className="sign-up-input w-full" values="" />
+                  <ErrorMessage name="lastName" component="div" className="error-message" />
                 </div>
-                <input name="lastName" placeholder="Enter your last name" className="sign-up-input w-full" value="" />
               </div>
-            </div>
-            <div>
-              <p>
-                <label htmlFor="username">Email</label>
-              </p>
-              <div className="flex items-center">
-                <div className="sign-up-icon">
-                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+              <div>
+                <p>
+                  <label htmlFor="username">Email</label>
+                </p>
+                <div className="flex items-center">
+                  <div className="sign-up-icon">
+                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
 
-                  </svg>
+                    </svg>
+                  </div>
+                  <Field type="text" name="email" placeholder="Enter your email" className="sign-up-input w-full" values="" />
+                  <ErrorMessage name="email" component="div" className="error-message" />
                 </div>
-                <input name="email" placeholder="Enter your email" className="sign-up-input w-full" value="" />
               </div>
-            </div>
-            <button type="submit" className="btn-blue text-white w-full my-3">Sign Up</button>
-          </form>
+              <button type="submit" disabled={isSubmitting} className="btn-blue text-white w-full my-3">Sign Up</button>
+            </Form>
+          )}
+          </Formik>
           <div className="text-center">
             <p className="my-4">OR</p>
             <div className="flex justify-center">
@@ -83,7 +136,7 @@ export default function Register() {
                     src="https://accounts.google.com/gsi/button?type=standard&amp;theme=outline&amp;size=large&amp;text=undefined&amp;shape=undefined&amp;logo_alignment=undefined&amp;width=undefined&amp;locale=undefined&amp;click_listener=undefined&amp;client_id=628424458787-qkhchkq95n7ht13oneer3692talfp63f.apps.googleusercontent.com&amp;iframe_id=gsi_388238_241166&amp;as=MVgTmfjfQ9F0RvNTWKuT%2BA"
                     allow="identity-credentials-get"
                     id="gsi_388238_241166"
-                    title="Nút Đăng nhập bằng Google"
+                    title="Sign in with Google"
                     style={{
                       display: "block",
                       position: "relative",
@@ -106,3 +159,4 @@ export default function Register() {
     </div>
   )
 }
+

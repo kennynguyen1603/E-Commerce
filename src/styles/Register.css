@@ -11,3 +11,8 @@
    background-color: rgb(37 99 235 / var(--tw-bg-opacity));
    padding: .75rem
 }
+
+button{
+   background-color: blue;
+   cursor: pointer;
+}

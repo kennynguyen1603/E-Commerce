@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@fontsource/poppins": "^5.0.12",
+    "@types/yup": "^0.32.0",
     "axios": "^1.6.7",
     "flowbite-react": "^0.7.2",
+    "formik": "^2.4.5",
     "less": "^4.2.0",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
@@ -23,7 +25,8 @@
     "react-icons": "^5.0.1",
     "react-multi-carousel": "^2.8.4",
     "react-router-dom": "^6.22.1",
-    "sort-by": "^0.0.2"
+    "sort-by": "^0.0.2",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.202",
@@ -41,7 +44,7 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "unplugin-auto-import": "^0.17.5",
-    "vite": "^5.1.5",
+    "vite": "^5.1.6",
     "vite-plugin-svgr": "^4.2.0"
   }
 }

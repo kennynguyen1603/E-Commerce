@@ -1,27 +1,49 @@
 import '@/styles/Login.css'
 import axios from 'axios';
+import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-
+import { Formik, Field, Form, ErrorMessage } from 'formik'
+import * as Yup from 'yup';
 
 
 export default function Login() {
-  const [name, setName] = useState('')
-  const [password, setPassword] = useState('')
-  const authContext = useContext<any>(AuthContext)
+  const authContext = useContext<any>(AuthContext);
 
-  function onLogin() {
-    if (name && password) {
-      axios.post(`${import.meta.env.VITE_API_BACKEND_BASE}auth/login`, {
-        email: name,
-        password: password
+  // Validation schema
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    password: Yup.string().required('Password is required'),
+  });
+
+  const handleSubmit = (values: { email: string, password: string }) => {
+    axios.post(`${import.meta.env.VITE_API_BACKEND_BASE}auth/login`, {
+      email: values.email,
+      password: values.password
+    })
+      .then((res) => {
+        if (res) {
+          localStorage.setItem('userInfo', JSON.stringify(res.data)); // save userInfo into localStorage
+          authContext.setInfoUser(res.data); // save userInfo into context
+        }
       })
-        .then((res) => {
-          if (res) {
-            authContext.setInfoUser(res.data)
-          }
-        })
-    }
-  }
+      .catch(error => {
+        console.error('Login failed:', error);
+      });
+  };
+
+  // function onLogin() {
+  //   if (name && password) {
+  //     axios.post(`${import.meta.env.VITE_API_BACKEND_BASE}auth/login`, {
+  //       email: name,
+  //       password: password
+  //     })
+  //       .then((res) => {
+  //         if (res) {
+  //           authContext.setInfoUser(res.data)
+  //         }
+  //       })
+  //   }
+  // }
   return (
     <>
       <div>
@@ -34,24 +56,29 @@ export default function Login() {
               <p className="text-3xl font-bold">Apple</p>
             </div>
             <h1 className="text-2xl my-5 font-bold">Login</h1>
-            <div className="w-full">
-              <div>
-                <label htmlFor="username">Email</label>
-                <div className="flex items-center">
-
-                  <input name="email" placeholder="Enter your email" onChange={(e) => setName(e.target.value)} value={name} className="sign-up-input w-full" />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="password">Password</label>
-                <div className="flex items-center">
-
-                  <input name="password" onChange={(e) => setPassword(e.target.value)} value={password} placeholder="Enter your password" type="password" className="sign-up-input-y w-full" />
-
-                </div>
-              </div>
-              <button type="submit" className="btn-blue w-full mt-5" onClick={onLogin}>Login</button>
-            </div>
+            <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={handleSubmit}>
+              {({ isSubmitting }) => (
+                <Form>
+                  <div className="w-full">
+                    <div>
+                      <label htmlFor="username">Email</label>
+                      <div className="flex items-center">
+                        <Field type="email" name="email" placeholder="Enter your email" className="sign-up-input w-full" />
+                        <ErrorMessage name="email" component="div" className='text-red-500' />
+                      </div>
+                    </div>
+                    <div>
+                      <label htmlFor="password">Password</label>
+                      <div className="flex items-center">
+                        <Field type="password" name="password" placeholder="Enter your password" className="sign-up-input-y w-full" />
+                        <ErrorMessage name="password" component="div" className="text-red-500" />
+                      </div>
+                    </div>
+                    <button type="submit" className="btn-blue w-full mt-5" disabled={isSubmitting}>Login</button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
             <div className="text-center">
               <a href="/forgot-password" className="my-5 text-blue-600 font-bold cursor-pointer hover:text-blue-500">Forgot Password?</a>
               <p className="my-4">OR</p>
@@ -70,7 +97,7 @@ export default function Login() {
           </div>
         </div>
         <LayoutFooter />
-      </div>
+      </div >
 
     </>
   );
