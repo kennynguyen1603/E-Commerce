@@ -1,9 +1,8 @@
 import '@/styles/Register.css'
-import React,{ useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-
-
+import axios from 'axios';
 
 interface FormData {
   firstName: string;
@@ -37,9 +36,14 @@ export default function Register() {
     email: Yup.string().email('Invalid email address').required('Required'),
   });
 
-  const handleSubmit = (values: FormData) => {
-    localStorage.setItem('formData', JSON.stringify(values));
-    // handle form submission
+  const handleSubmit = async (values: FormData) => {
+    try {
+      const response = await axios.post("YOUR_BACKEND_ENDPOINT", values);
+      console.log(response.data);
+      localStorage.setItem('formData', JSON.stringify(values));
+    } catch (error) {
+      console.error("Error", error);
+    }
   };
 
   return (
