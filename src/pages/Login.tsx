@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import Register from './Register';
+import Register from '@/pages/Register';
 
 
 export default function Login() {
@@ -53,19 +53,6 @@ export default function Login() {
       });
   };
 
-  // function onLogin() {
-  //   if (name && password) {
-  //     axios.post(`${import.meta.env.VITE_API_BACKEND_BASE}auth/login`, {
-  //       email: name,
-  //       password: password
-  //     })
-  //       .then((res) => {
-  //         if (res) {
-  //           authContext.setInfoUser(res.data)
-  //         }
-  //       })
-  //   }
-  // }
   return (
     <>
       <div>
@@ -114,7 +101,7 @@ export default function Login() {
             </div>
             <p className="my-5">
               Don't have an account?
-              <a href="/register" className="text-blue-600 font-semibold cursor-pointer hover:text-blue-500">Sign Up now</a>
+              <a href="./Register" className="text-blue-600 font-semibold cursor-pointer hover:text-blue-500">Sign Up now</a>
             </p>
           </div>
         </div>
