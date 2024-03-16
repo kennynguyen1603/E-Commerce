@@ -2,20 +2,30 @@ import '@/styles/Register.css'
 import { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 interface FormData {
-  firstName: string;
-  lastName: string;
+  name: string;
+  phoneNumber: string;
   email: string;
+  password: string;
 }
 
 export default function Register() {
   const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
+    name: "",
+    phoneNumber: "",
     email: "",
+    password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false); // State: display the password
+  const [registrationStatus, setRegistrationStatus] = useState<string | null>(null); // State:
+
+  const togglePasswordVisibility = () => { // change the display status of password
+    setShowPassword(!showPassword);
+  };
 
   useEffect(() => {
     const storedData = localStorage.getItem('formData');
@@ -25,24 +35,45 @@ export default function Register() {
   }, []);
 
   const initialValues: FormData = {
-    firstName: '',
-    lastName: '',
+    name: '',
+    phoneNumber: '',
     email: '',
+    password: ''
   };
 
   const validationSchema = Yup.object({
-    firstName: Yup.string().required('Required'),
-    lastName: Yup.string().required('Required'),
+    name: Yup.string().required('Required'),
+    phoneNumber: Yup.string().required('Required'),
     email: Yup.string().email('Invalid email address').required('Required'),
+    password: Yup.string().required("Required")
   });
 
   const handleSubmit = async (values: FormData) => {
     try {
-      const response = await axios.post("YOUR_BACKEND_ENDPOINT", values);
+      const response = await axios.post("BaseURL/user/register", values);
       console.log(response.data);
       localStorage.setItem('formData', JSON.stringify(values));
+      setRegistrationStatus(response.data.status);
     } catch (error) {
-      console.error("Error", error);
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<any>; // cast error to AxiosError
+        if (axiosError.response) {
+          const responseData = axiosError.response.data
+          if (axiosError.response.status === 400) {
+            setRegistrationStatus(responseData.message);
+          } else if (axiosError.response.status === 409) {
+            setRegistrationStatus(responseData.message);
+          } else {
+            setRegistrationStatus("Unknown error: Internal Server Error!");
+          }
+        } else {
+          setRegistrationStatus("Unknown error: Network Error!");
+        }
+        console.error("Error", axiosError);
+      } else {
+        console.error("Unknown error type:", typeof error);
+
+      }
     }
   };
 
@@ -69,16 +100,10 @@ export default function Register() {
                 <div className="h-64 w-64 border-dashed border-2 rounded-lg text-center bg-gray-100 border-gray-200">
                   <div className="flex items-center justify-center h-full p-8">
                     <div>
-                      <div className="flex justify-center">
-                        <span className="text-white text-lg bg-blue-700 p-3 rounded-lg">
-                          <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
 
-                          </svg>
-                        </span>
-                      </div>
                       <p className="text-sm text-gray-400 my-2">Drag and drop an image here, or click to upload</p>
                       <button type="button" className="bg-zinc-200 text-blue-600 text-sm font-semibold py-2 px-4 rounded">Upload Image</button>
-                      <input type="file" accept="image/*" className="hidden" />
+                      <input id="upload" type="file" accept="image/*" className="hidden" />
                     </div>
                   </div>
                 </div>
@@ -124,6 +149,18 @@ export default function Register() {
                   <Field type="text" name="email" placeholder="Enter your email" className="sign-up-input w-full" values="" />
                   <ErrorMessage name="email" component="div" className="error-message" />
                 </div>
+                <p>
+                  <label htmlFor="password">Password</label>
+                </p>
+                <div className="flex items-center">
+                  <div className="sign-up-icon">
+                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                    </svg>
+                  </div>
+                  <Field type={showPassword ? "text" : "password"} name="password" placeholder="Enter your password" className="sign-up-input w-full" values="" />
+                  <button type="button" onClick={togglePasswordVisibility} className='show-password-button'>{showPassword ? <FaEyeSlash /> : <FaEye />}</button>
+                  <ErrorMessage name="password" component="div" className="error-message" />
+                </div>
               </div>
               <button type="submit" disabled={isSubmitting} className="btn-blue text-white w-full my-3">Sign Up</button>
             </Form>
@@ -157,10 +194,15 @@ export default function Register() {
             </div>
             <p className="my-5">Already have an account? <a className="text-blue-600 font-semibold cursor-pointer hover:text-blue-500" href="/login">Login now</a></p>
           </div>
+          {registrationStatus && (
+            <div className={`text-center ${registrationStatus.startsWith("Success") ? "text-green-500" : "text-red-500"}`}>
+              {registrationStatus}
+            </div>
+          )}
         </div>
       </div>
       <LayoutFooter />
-    </div>
+    </div >
   )
 }
 

@@ -16,3 +16,23 @@ button{
    background-color: blue;
    cursor: pointer;
 }
+
+.show-password-button{
+      position: absolute;
+      right: 50px; 
+      background: none;
+      border: none;
+      cursor: pointer;
+   
+}
+
+.error-message {
+   color: red;
+   font-size: 0.75rem; /* Cỡ chữ nhỏ hơn */
+   margin-top: 0.25rem; /* Khoảng cách từ lỗi đến trường Field */
+ }
+
+ .sign-up-input {
+   width: calc(100% - 30px); /* Đảm bảo trường nhập liệu không chạm vào nút */
+   margin-right: 10px; /* Khoảng cách từ trường nhập liệu đến nút show password */
+ }
