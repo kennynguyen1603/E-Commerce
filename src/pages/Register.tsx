@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import axios, { AxiosError } from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-
+import Axios from '@/config/axios'
 interface FormData {
   name: string;
   phoneNumber: string;
@@ -26,6 +26,7 @@ export default function Register() {
   const togglePasswordVisibility = () => { // change the display status of password
     setShowPassword(!showPassword);
   };
+
 
   useEffect(() => {
     const storedData = localStorage.getItem('formData');
@@ -50,7 +51,7 @@ export default function Register() {
 
   const handleSubmit = async (values: FormData) => {
     try {
-      const response = await axios.post("BaseURL/user/register", values);
+      const response = await Axios.post("user/register", values);
       console.log(response.data);
       localStorage.setItem('formData', JSON.stringify(values));
       setRegistrationStatus(response.data.status);
@@ -77,6 +78,12 @@ export default function Register() {
     }
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSubmit(formData);
+    }
+  };
+
   return (
     <div>
       <LayoutHeader />
@@ -93,14 +100,13 @@ export default function Register() {
           <Formik
             initialValues={formData || initialValues}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+            onSubmit={(values) => handleSubmit(values)}
           >{({ isSubmitting }) => (
             <Form className="w-full">
               <div className="flex justify-center">
                 <div className="h-64 w-64 border-dashed border-2 rounded-lg text-center bg-gray-100 border-gray-200">
                   <div className="flex items-center justify-center h-full p-8">
                     <div>
-
                       <p className="text-sm text-gray-400 my-2">Drag and drop an image here, or click to upload</p>
                       <button type="button" className="bg-zinc-200 text-blue-600 text-sm font-semibold py-2 px-4 rounded">Upload Image</button>
                       <input id="upload" type="file" accept="image/*" className="hidden" />
@@ -138,7 +144,7 @@ export default function Register() {
                   <label htmlFor="password">Password</label>
                 </p>
                 <div className="flex items-center">
-                  <Field type={showPassword ? "text" : "password"} name="password" placeholder="Enter your password" className="sign-up-input w-full" values="" />
+                  <Field type={showPassword ? "text" : "password"} name="password" placeholder="Enter your password" onKeyPress={handleKeyPress} className="sign-up-input w-full" values="" />
                   <button type="button" onClick={togglePasswordVisibility} className='show-password-button'>{showPassword ? <FaEyeSlash /> : <FaEye />}</button>
                   <ErrorMessage name="password" component="div" className="error-message" />
                 </div>

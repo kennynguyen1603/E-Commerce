@@ -41,7 +41,7 @@ export default function Iphone() {
         </div>
       </div>
       <div className="img-iphone">
-        <img src="https://s3-alpha-sig.figma.com/img/6c27/133b/8d89f36564dcafa8c8b3c0a44b4d00ca?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=arloZatXl~uvJ8V0v0h5P~ZxUM7V1RIHtuIu~q3u25M2uVR1qgDkSDAQngkHNbi1oQPQlSTfDGmGiyaSEM3IA80FGUwkRH~afuX2hv1orVsJDzg76W-Ranj21lfVDqkOXCwQt46ORBxjozuZ5YI4bm6ukHrgjx-56waNnBeMpm3P5DOBQ0cEw6xhzgv7YfVSI6uCzNNiMguJ~R5~mkwSLWXCNAu~fMI-7wlu5M1Fp7qdv2L~N7EeuKLmZuIG9BdI1A6ZIFp1eMr1Ne3N3WqZ7JdaY~yWN4M4Kltv4OBMc0IwR0gyG5K0PiPf1qkbCBe3ACs6gAgHjBE77bPZXOdmOA__" alt="" />
+        <img src="https://s3-alpha-sig.figma.com/img/6c27/133b/8d89f36564dcafa8c8b3c0a44b4d00ca?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=JuEcvJhiosctlsESgTdzNTRRo50iEjt360zcloVg~942oyAUEtiuw~8h4AsUa3YHOVpTL76gesl8hLDROEnFM0w6f45UqGy2MwxzBHHW8dq5BKdyCGzLlyO6aS3zJ-8WKG-S8HHQ2igJQENo-IS1VI4Gwl3AcRCQMKVGYygb9ts2tHThUKnZCDdLtjhE0Cf5u0ElYNZ~uNkDiBPQIDV0JrP6lmOWiH5hKFZ0t71iNSIejnlNiOjFAAquuEoT3~NtE9c0XG3FP92IdTnfc38CUVf4pXuHmga0xMm0TFcUpE5cusCe0SwsqauTtdaWHVkr03rLa40BFS-Z~vC~Ae5q4w__" alt="" />
       </div>
       <div className="side">
         <h1>Newest ex.iphones. Collection</h1>

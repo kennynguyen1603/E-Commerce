@@ -1,6 +1,7 @@
 import "@/styles/header.less";
 import { FaApple } from "react-icons/fa";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'
+
 export default function Header() {
   const [showHeader, setShowHeader] = useState(true);
 
@@ -19,7 +20,7 @@ export default function Header() {
 }
 
   return (
-  <div className="home w-full flex justify-around p-5 text-custom-gray items-center font-bold sticky top-0 right-0 left-0 z-10 bg-white">
+  <div className={`home w-full flex justify-around p-5 text-custom-gray items-center font-bold sticky top-0 right-0 left-0 z-10 bg-white ${showHeader ? 'show' : 'hide'}`}>
         <div className="logo flex items-center space-x-1.5">
           <FaApple />
           <a href='/home'>ex.iphones</a>
@@ -33,7 +34,7 @@ export default function Header() {
         <div className="auth flex space-x-2.5">
           <NavLink to="/login">Login</NavLink>
           <p>|</p>
-          <NavLink to="/signup">Sign up</NavLink>
+          <NavLink to="/sign-up">Sign up</NavLink>
         </div>
     </div>
   );

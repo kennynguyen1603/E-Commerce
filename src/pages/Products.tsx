@@ -3,6 +3,8 @@ import _ from 'lodash';
 import "@/styles/products.less";
 import axios from 'axios';
 import { filter as _filter, isEmpty, orderBy } from 'lodash'
+// import { AuthContext } from '@/context/AuthContext';
+
 
 type SortByType = 'price' | 'rating' | 'popular' | 'newest';
 
@@ -14,13 +16,14 @@ interface Filter {
   order: 'asc' | 'desc'
 }
 
-export default function Products() {
+
+export default function Products({} : any) {
   const [products, setProducts] = useState<Product[] | []>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [totalProducts, setTotalProducts] = useState(0);
   const [filterProducts, setFilterProducts] = useState(0);
-
+  // const authContext = useContext<any>(AuthContext)
 
   const [filter, setFilter] = useState<Filter>({
     category: [],

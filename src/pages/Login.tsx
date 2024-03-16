@@ -1,14 +1,19 @@
-import '@/styles/Login.css'
+import { updateAuthorization } from '@/config/axios';
+import { AuthContext } from '@/context/AuthContext';
+import '@/styles/Login.css';
+import { saveInfoToLocalStorage } from '@/utils/product';
 import axios from 'axios';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { Formik, Field, Form, ErrorMessage } from 'formik'
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate, useSearchParams } from 'react-router-dom' // Import thêm các hook cần thiết từ react-router-dom
 
 
 
 export default function Login() {
   const authContext = useContext<any>(AuthContext);
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const [loading, setLoading] = useState(false)
   // const [resetPasswordToken, setResetPasswordToken] = useState<string>('')
 
   // Validation schema
@@ -23,16 +28,38 @@ export default function Login() {
       password: values.password
     })
       .then((res) => {
-        if (res.data.success) {
-          localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo)); // save userInfo into localStorage
-          authContext.setInfoUser(res.data.userInfo); // save userInfo into context
-        } else {
-          console.error('Login failed', res.data.message); // handle login error
+        if (res && res.data && res.data.accessToken) {
+          authContext.setInfoUser(res.data)
+          updateAuthorization(res.data.accessToken);
+          saveInfoToLocalStorage(res.data as InfoUserType);
+          navigate(searchParams.get('redirect') || '/');
+          console.log("🚀 ~ .then ~ location:", searchParams.get('redirect'));
         }
       })
-      .catch(error => {
-        console.error('Login failed:', error);
+      .finally(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false); if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message
+          if (errorMessage == 'All field are mandatory!') {
+            console.error('Login failed:', errorMessage)
+          } else if (errorMessage === 'Incorrect password!') {
+            console.error('Login failed:', errorMessage);
+          } else {
+            console.error('Login failed:', errorMessage);
+          }
+        } else {
+          console.error('Login failed: Unknown error:', error);
+        }
       });
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>, values: { email: string, password: string }) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(values);
+    }
   };
 
   // const handleResetPassword = (email: string, phoneNumber: string) => {
@@ -66,7 +93,7 @@ export default function Login() {
             </div>
             <h1 className="text-2xl my-5 font-bold">Login</h1>
             <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={handleSubmit}>
-              {({ isSubmitting }) => (
+              {({ isSubmitting, values }) => (
                 <Form>
                   <div className="w-full">
                     <div>
@@ -79,11 +106,11 @@ export default function Login() {
                     <div>
                       <label htmlFor="password">Password</label>
                       <div className="flex items-center">
-                        <Field type="password" name="password" placeholder="Enter your password" className="sign-up-input-y w-full" />
+                        <Field type="password" name="password" placeholder="Enter your password" className="sign-up-input-y w-full" onKeyDown={(event) => handleKeyPress(event, values)} />
                         <ErrorMessage name="password" component="div" className="text-red-500" />
                       </div>
                     </div>
-                    <button type="submit" className="btn-blue w-full mt-5" disabled={isSubmitting}>Login</button>
+                    <button type="submit" className="btn-blue w-full mt-5" disabled={isSubmitting || loading}>Login</button>
                   </div>
                 </Form>
               )}
