@@ -30,7 +30,7 @@ export default function Login() {
               saveInfoToLocalStorage(res.data as InfoUserType)
 
               // localStorage.setItem('infoUser', JSON.stringify(res.data))
-              navigate(searchParams.get('redirect') || '')
+              navigate(searchParams.get('redirect') || '/')
               console.log("🚀 ~ .then ~ location:", searchParams.get('redirect'))
             }
           }

@@ -1,5 +1,4 @@
 import React from 'react'
-import '@/styles/Cart.less'
 
 function ProductsIphone(props: any) {
    return (

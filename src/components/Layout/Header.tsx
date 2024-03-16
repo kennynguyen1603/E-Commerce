@@ -1,42 +1,58 @@
+import { AuthContext } from "@/context/AuthContext";
 import "@/styles/header.less";
 import { FaApple } from "react-icons/fa";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
+import { FaCartShopping } from "react-icons/fa6";
 export default function Header() {
   const [showHeader, setShowHeader] = useState(true);
+  const { infoUser } = useContext(AuthContext);
 
   useEffect(() => {
     const handleScroll = () => {
       setShowHeader(window.scrollY > 200 || window.scrollY === 0);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const activeClass = (params : any) => {
-	return params.isActive ? "active-item" : ""
-}
+  const activeClass = (params: any) => {
+    return params.isActive ? "active-item" : "";
+  };
 
   return (
-  <div className="home w-full flex justify-around p-5 text-custom-gray items-center font-bold sticky top-0 right-0 left-0 z-10 bg-white">
-        <div className="logo flex items-center space-x-1.5">
-          <FaApple />
-          <a href='/home'>ex.iphones</a>
-        </div>   
-        <div className="routes flex space-x-6">
-          <NavLink to="/home" className={activeClass}>Home</NavLink>
-          <NavLink to="/contact" className={activeClass}>Contact</NavLink>
-          <NavLink to="/about" className={activeClass}>About</NavLink>
-          <NavLink to="/products" className={activeClass}>Products</NavLink>
-        </div>
+    <div className="home w-full flex justify-around p-5 text-custom-gray items-center font-bold sticky top-0 right-0 left-0 z-10 bg-white">
+      <div className="logo flex items-center space-x-1.5">
+        <FaApple />
+        <a href="/home">ex.iphones</a>
+      </div>
+      <div className="routes flex space-x-6">
+        <NavLink to="/home" className={activeClass}>
+          Home
+        </NavLink>
+        <NavLink to="/contact" className={activeClass}>
+          Contact
+        </NavLink>
+        <NavLink to="/about" className={activeClass}>
+          About
+        </NavLink>
+        <NavLink to="/products" className={activeClass}>
+          Products
+        </NavLink>
+      </div>
+
+      {infoUser ? (
+        <NavLink to={"/cart"}>
+          <FaCartShopping  />
+        </NavLink>
+      ) : (
         <div className="auth flex space-x-2.5">
           <NavLink to="/login">Login</NavLink>
           <p>|</p>
           <NavLink to="/signup">Sign up</NavLink>
         </div>
+      )}
     </div>
   );
 }
-
-
