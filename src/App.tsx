@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route element={<LayoutAuth />} >
             <Route path='/login' element={<PagesLogin />} />
-            <Route path='/signup' element={<PagesRegister />} />
+            <Route path='/sign-up' element={<PagesRegister />} />
           </Route>
           <Route element={<LayoutMain />} >
             <Route path='/' element={<PagesHome />} />

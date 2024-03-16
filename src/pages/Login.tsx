@@ -4,12 +4,12 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import Register from '@/pages/Register';
+
 
 
 export default function Login() {
   const authContext = useContext<any>(AuthContext);
-  const [resetPasswordToken, setResetPasswordToken] = useState<string>('')
+  // const [resetPasswordToken, setResetPasswordToken] = useState<string>('')
 
   // Validation schema
   const validationSchema = Yup.object().shape({
@@ -35,23 +35,23 @@ export default function Login() {
       });
   };
 
-  const handleResetPassword = (email: string, phoneNumber: string) => {
-    axios.post(`${import.meta.env.VITE_API_BACKEND_BASE}auth/resetPassword`, {
-      email,
-      phoneNumber
-    })
-      .then((res) => {
-        if (res.data.resetPasswordToken) {
-          setResetPasswordToken(res.data.resetPasswordToken);
-        } else {
-          console.error('Reset password failed:', res.data.message);
-          // Handle reset password error
-        }
-      })
-      .catch(error => {
-        console.error('Reset password failed:', error);
-      });
-  };
+  // const handleResetPassword = (email: string, phoneNumber: string) => {
+  //   axios.post(`${import.meta.env.VITE_API_BACKEND_BASE}auth/resetPassword`, {
+  //     email,
+  //     phoneNumber
+  //   })
+  //     .then((res) => {
+  //       if (res.data.resetPasswordToken) {
+  //         setResetPasswordToken(res.data.resetPasswordToken);
+  //       } else {
+  //         console.error('Reset password failed:', res.data.message);
+  //         // Handle reset password error
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error('Reset password failed:', error);
+  //     });
+  // };
 
   return (
     <>
@@ -89,7 +89,7 @@ export default function Login() {
               )}
             </Formik>
             <div className="text-center">
-              <a href="/forgot-password" onClick={() => handleResetPassword('3email@gmail.com', '12345')} className="my-5 text-blue-600 font-bold cursor-pointer hover:text-blue-500">Forgot Password?</a>
+              <a href="/forgot-password" className="my-5 text-blue-600 font-bold cursor-pointer hover:text-blue-500">Forgot Password?</a>
               <p className="my-4">OR</p>
               <div className="flex justify-center">
                 <div style={{ height: "40px" }}>
@@ -101,7 +101,7 @@ export default function Login() {
             </div>
             <p className="my-5">
               Don't have an account?
-              <a href="./Register" className="text-blue-600 font-semibold cursor-pointer hover:text-blue-500">Sign Up now</a>
+              <Link to="/sign-up" className="text-blue-600 font-semibold cursor-pointer hover:text-blue-500">Sign Up now</Link>
             </p>
           </div>
         </div>

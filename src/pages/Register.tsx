@@ -113,11 +113,6 @@ export default function Register() {
                   <label htmlFor="username">First Name</label>
                 </p>
                 <div className="flex items-center">
-                  <div className="sign-up-icon">
-                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-
-                    </svg>
-                  </div>
                   <Field type="text" name="firstName" placeholder="Enter your first name" className="sign-up-input w-full" values="" />
                   <ErrorMessage name="firstName" component="div" className="error-message" />
                 </div>
@@ -127,11 +122,6 @@ export default function Register() {
                   <label htmlFor="username">Last Name</label>
                 </p>
                 <div className="flex items-center">
-                  <div className="sign-up-icon">
-                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-
-                    </svg>
-                  </div>
                   <Field type="text" name="lastName" placeholder="Enter your last name" className="sign-up-input w-full" values="" />
                   <ErrorMessage name="lastName" component="div" className="error-message" />
                 </div>
@@ -141,11 +131,6 @@ export default function Register() {
                   <label htmlFor="username">Email</label>
                 </p>
                 <div className="flex items-center">
-                  <div className="sign-up-icon">
-                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-
-                    </svg>
-                  </div>
                   <Field type="text" name="email" placeholder="Enter your email" className="sign-up-input w-full" values="" />
                   <ErrorMessage name="email" component="div" className="error-message" />
                 </div>
@@ -153,10 +138,6 @@ export default function Register() {
                   <label htmlFor="password">Password</label>
                 </p>
                 <div className="flex items-center">
-                  <div className="sign-up-icon">
-                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                    </svg>
-                  </div>
                   <Field type={showPassword ? "text" : "password"} name="password" placeholder="Enter your password" className="sign-up-input w-full" values="" />
                   <button type="button" onClick={togglePasswordVisibility} className='show-password-button'>{showPassword ? <FaEyeSlash /> : <FaEye />}</button>
                   <ErrorMessage name="password" component="div" className="error-message" />
