@@ -3,8 +3,6 @@ import _ from 'lodash';
 import "@/styles/products.less";
 import axios from 'axios';
 import { filter as _filter, isEmpty, orderBy } from 'lodash'
-// import { AuthContext } from '@/context/AuthContext';
-
 
 type SortByType = 'price' | 'rating' | 'popular' | 'newest';
 

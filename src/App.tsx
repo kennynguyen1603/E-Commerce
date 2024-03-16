@@ -1,43 +1,16 @@
 import './App.css'
 import '@/styles/Home.less';
 import AuthProvider from './context/AuthContext';
-import axios from 'axios';
+// import axios from 'axios';
 import { getInfoToLocalStorage } from './utils/product';
 import { updateAuthorization } from './config/axios';
-
-
-// interface cartItemsType {
-//   productId: string;
-//   title: string;
-//   price: number;
-//   quantity: number;
-//   description: string;
-//   discount: number;
-//   rating: number;
-//   stock: number;
-//   thumbnail: string;
-//   category: string;
-//   image: Array<string>;
-// }
-
-// interface wishItemsType {
-//   productId: string;
-//   title: string;
-//   price: number;
-//   quantity: number;
-//   description: string;
-//   discount: number;
-//   rating: number;
-//   stock: number;
-//   thumbnail: string;
-//   category: string;
-//   image: Array<string>;
-// }
+import ProductDetail from "@/components/products/ProductDetail"
 
 function App() {
   const [infoUser, setInfoUser] = useState<InfoUserType | null>(null)
-  const [cartItems, setCartItems] = useState<cartItemsType[]>([])
+  const [cartItems, setCartItems] = useState<cartItemsServerType[]>([])
   const [wishlist, setWishlist] = useState<wishItemsType[]>([])
+
   useEffect(() => {
     console.log("🚀 ~ App ~ infoUser:", infoUser)
   }, [infoUser])
@@ -48,13 +21,7 @@ function App() {
       setInfoUser(res)
       updateAuthorization(res.accessToken)
     }
-
   }
-
-  useEffect(() => {
-    console.log("🚀 ~ App ~ cartItems:", cartItems)
-    console.log("🚀 ~ App ~ wishlist:", wishlist);
-  }, [cartItems, wishlist])
 
   useEffect(() => {
     getInfoUserFromStorage();
@@ -76,8 +43,9 @@ function App() {
             <Route path='/wishlist' element={<PagesWishlist />} />
             <Route path='/contact' element={<PagesContact />} />
             <Route path='/about' element={<PagesAbout />} />
+            <Route path='/product/:productId' element={<ProductDetail />} />
           </Route>
-          <Route path='/register' element={<PagesNotFound />} />
+          <Route path='*' element={<PagesNotFound />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
