@@ -19,5 +19,5 @@ export default defineConfig({
     ]
   },
   // base: import.meta.env.PROD ? '/E-Commerce/' :''
-  base: process.env.NODE_ENV === 'production' ? '/E-Commerce/' :''
+  base: process.env.VITE_NODE_ENV === 'production' ? 'E-Commerce' :''
 })
