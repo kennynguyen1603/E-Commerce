@@ -103,7 +103,3 @@ export const configAutoImport = {
     ReactIconsImports,
   ],
 };
-console.log(
-  "🚀 ~ export  configAutoImport.getComponentImports:",
-  flowbiteImports
-);

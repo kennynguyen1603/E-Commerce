@@ -3,43 +3,83 @@ import { AuthContext } from '@/context/AuthContext';
 import '@/styles/Login.css';
 import { saveInfoToLocalStorage } from '@/utils/product';
 import axios from 'axios';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
+import { useNavigate, useSearchParams } from 'react-router-dom' // Import thêm các hook cần thiết từ react-router-dom
+
 
 
 export default function Login() {
-  const [name, setName] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const authContext = useContext<any>(AuthContext)
+  const authContext = useContext<any>(AuthContext);
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const [loading, setLoading] = useState(false)
+  // const [resetPasswordToken, setResetPasswordToken] = useState<string>('')
 
-  function onLogin() {
-    if (name && password) {
-      setLoading(true)
-      axios.post(`${import.meta.env.VITE_API_BACKEND_BASE}auth/login`, {
-        email: name,
-        password: password
+  // Validation schema
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    password: Yup.string().required('Password is required'),
+  });
+
+  const handleSubmit = (values: { email: string, password: string }) => {
+    axios.post(`${import.meta.env.VITE_API_BACKEND_BASE}auth/login`, {
+      email: values.email,
+      password: values.password
+    })
+      .then((res) => {
+        if (res && res.data && res.data.accessToken) {
+          authContext.setInfoUser(res.data)
+          updateAuthorization(res.data.accessToken);
+          saveInfoToLocalStorage(res.data as InfoUserType);
+          navigate(searchParams.get('redirect') || '/');
+          console.log("🚀 ~ .then ~ location:", searchParams.get('redirect'));
+        }
       })
-        .then((res) => {
-          if (res) {
-            authContext.setInfoUser(res.data)
-            if (res?.data?.accessToken) {
-              // Axios.defaults.headers.common['Authorization'] = `Bearer ${res?.data?.accessToken}`
-
-              updateAuthorization(res.data.accessToken)
-              saveInfoToLocalStorage(res.data as InfoUserType)
-
-              // localStorage.setItem('infoUser', JSON.stringify(res.data))
-              navigate(searchParams.get('redirect') || '')
-              console.log("🚀 ~ .then ~ location:", searchParams.get('redirect'))
-            }
+      .finally(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false); if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message
+          if (errorMessage == 'All field are mandatory!') {
+            console.error('Login failed:', errorMessage)
+          } else if (errorMessage === 'Incorrect password!') {
+            console.error('Login failed:', errorMessage);
+          } else {
+            console.error('Login failed:', errorMessage);
           }
-        })
-        .finally(() => {
-          setLoading(false)
-        })
+        } else {
+          console.error('Login failed: Unknown error:', error);
+        }
+      });
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>, values: { email: string, password: string }) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(values);
     }
-  }
+  };
+
+  // const handleResetPassword = (email: string, phoneNumber: string) => {
+  //   axios.post(`${import.meta.env.VITE_API_BACKEND_BASE}auth/resetPassword`, {
+  //     email,
+  //     phoneNumber
+  //   })
+  //     .then((res) => {
+  //       if (res.data.resetPasswordToken) {
+  //         setResetPasswordToken(res.data.resetPasswordToken);
+  //       } else {
+  //         console.error('Reset password failed:', res.data.message);
+  //         // Handle reset password error
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error('Reset password failed:', error);
+  //     });
+  // };
+
   return (
     <>
       <div>
@@ -52,24 +92,29 @@ export default function Login() {
               <p className="text-3xl font-bold">Apple</p>
             </div>
             <h1 className="text-2xl my-5 font-bold">Login</h1>
-            <div className="w-full">
-              <div>
-                <label htmlFor="username">Email</label>
-                <div className="flex items-center">
-
-                  <input name="email" placeholder="Enter your email" onChange={(e) => setName(e.target.value)} value={name} className="sign-up-input w-full" />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="password">Password</label>
-                <div className="flex items-center">
-
-                  <input name="password" onChange={(e) => setPassword(e.target.value)} value={password} placeholder="Enter your password" type="password" className="sign-up-input-y w-full" />
-
-                </div>
-              </div>
-              <button type="submit" disabled={loading} className="btn-blue w-full mt-5" onClick={onLogin}>Login</button>
-            </div>
+            <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={handleSubmit}>
+              {({ isSubmitting, values }) => (
+                <Form>
+                  <div className="w-full">
+                    <div>
+                      <label htmlFor="username">Email</label>
+                      <div className="flex items-center">
+                        <Field type="email" name="email" placeholder="Enter your email" className="sign-up-input w-full" />
+                        <ErrorMessage name="email" component="div" className='text-red-500' />
+                      </div>
+                    </div>
+                    <div>
+                      <label htmlFor="password">Password</label>
+                      <div className="flex items-center">
+                        <Field type="password" name="password" placeholder="Enter your password" className="sign-up-input-y w-full" onKeyDown={(event) => handleKeyPress(event, values)} />
+                        <ErrorMessage name="password" component="div" className="text-red-500" />
+                      </div>
+                    </div>
+                    <button type="submit" className="btn-blue w-full mt-5" disabled={isSubmitting || loading}>Login</button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
             <div className="text-center">
               <a href="/forgot-password" className="my-5 text-blue-600 font-bold cursor-pointer hover:text-blue-500">Forgot Password?</a>
               <p className="my-4">OR</p>
@@ -83,12 +128,12 @@ export default function Login() {
             </div>
             <p className="my-5">
               Don't have an account?
-              <a href="/register" className="text-blue-600 font-semibold cursor-pointer hover:text-blue-500">Sign Up now</a>
+              <Link to="/sign-up" className="text-blue-600 font-semibold cursor-pointer hover:text-blue-500">Sign Up now</Link>
             </p>
           </div>
         </div>
         <LayoutFooter />
-      </div>
+      </div >
 
     </>
   );
