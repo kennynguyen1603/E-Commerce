@@ -1,9 +1,14 @@
 import '@/styles/Contact.css'
+import { Helmet } from 'react-helmet';
 
 export default function Contact() {
    return (
-      <div className="bg-gray-100 px-10 pt-24 lg:px-20 pb-20 lg:py-32">
 
+      <div className="bg-gray-100 px-10 pt-24 lg:px-20 pb-20 lg:py-32">
+         <Helmet>
+            <title>Contact</title>
+            <meta name="description" content="Helmet application" />
+         </Helmet>
          <div className="lg:flex lg:gap-1 p-2 bg-white rounded-lg shadow-xl">
             <div className="relative lg:w-2/5 bg-black text-white p-10 rounded-lg overflow-clip">
                <h1 className="text-xl lg:text-3xl font-semibold">Contact Information</h1>

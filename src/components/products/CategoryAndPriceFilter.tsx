@@ -1,4 +1,4 @@
-import { union, filter as _filter, max } from 'lodash';
+import { filter as _filter, union } from 'lodash';
 import React, { ChangeEvent, useRef, useState } from 'react';
 
 interface CategoryAndPriceFilterProps {

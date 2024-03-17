@@ -1,31 +1,32 @@
-import React from "react";
+import Axios from "@/config/axios";
 import "@/styles/Cart.less";
-import { CiCircleRemove } from "react-icons/ci";
+import { Helmet } from "react-helmet";
 
 function Cart() {
-  const [count1, setCount1] = useState(0);
-  const [count2, setCount2] = useState(0);
+  const [cart, setCart] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
-  const increaseCount1 = () => {
-    setCount1(count1 + 1);
-  };
+  function getCart() {
+    Axios.get("carts/get")
+      .then((res) => {
+        console.log("🚀 ~ .then ~ res:", res.data);
+        if (res?.data?.products) {
+          setCart(res.data.products);
+        }
+      })
+      .finally(() => setLoading(false));
+  }
 
-  const decreaseCount1 = () => {
-    if (count1 > 0) {
-      setCount1(count1 - 1);
-    }
-  };
-  const increaseCount2 = () => {
-    setCount2(count2 + 1);
-  };
+  useEffect(() => getCart(), []);
 
-  const decreaseCount2 = () => {
-    if (count2 > 0) {
-      setCount2(count2 - 1);
-    }
-  };
+  if (loading) return <div>Loading... </div>;
+
   return (
-    <div className="Cart">
+    <div className="Cart mt-10">
+      <Helmet>
+        <title>Cart</title>
+        <meta name="description" content="Helmet application" />
+      </Helmet>
       <div className="cart-full">
         <h1>Shopping Card</h1>
         <div className="cart-title">
@@ -34,58 +35,10 @@ function Cart() {
           <h3>Quantity</h3>
           <h3>Sub-Total</h3>
         </div>
-        <div className="cart-items">
-          <div className="cart-product">
-            <button className="btn-del">
-              <CiCircleRemove />
-            </button>
-            <img
-              src="https://s3-alpha-sig.figma.com/img/9936/80a4/fb804721053db577fe1e84c4758c415b?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gUIR8voWp0Mja2ywjLb1WsgUQWNeQytmP2ca6Y0AxOJAQviydPTb~4B6ybFC2RdxBPk5FJTRRBCj3b09m0K3L7WXqKmM338WSF~8WKwOzymRJziuqi1R~b5GDC-dtckjjB~FqybDt8nJ1uSuFGE1boBnVe~Z8AfJSL6lCzhdFscQhnxjVwinqmoz-YqaUYW6Ss8FfmykYMJYajskbgwDvTAcRNmHq1S~ogu0K9-aaepS37MVGS1gmYj~NABlUYuFYiLtpP~UZ0hW0PBbixWWyAalqWkJGfNWZkBZpA-aaRdg-plU-syz~UBRCcl1Bly9x7d~4Z4Ieb7lQsi8SfgLLA__"
-              alt=""
-            />
-            <p>2020 Apple MacBook Pro with App..</p>
-          </div>
-          <div className="cart-price">
-            <span>
-              <del>₹120000</del>
-            </span>
-            <span>₹89000</span>
-          </div>
-          <div className="cart-quantity">
-            <button onClick={decreaseCount1}>-</button>
-            <h2> {count1}</h2>
-            <button onClick={increaseCount1}>+</button>
-          </div>
-          <div className="cart-total">
-            <span>₹89000</span>
-          </div>
-        </div>
-        <div className="cart-items">
-          <div className="cart-product">
-            <button className="btn-del">
-              <CiCircleRemove />
-            </button>
-            <img
-              src="https://s3-alpha-sig.figma.com/img/dc45/6873/073d3eeaa50b890f18d013adcbd15203?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=q968O-WOgyLjQ7pwsEcYhZL-t3WV378EGhNzJUEw7NwU4Acpn06WXiaD-b3EnJU62oMAnu3LDYNN2UTKbqF2fp0lNL0uAn3-~dINhhGzURRts0lchBFNfqCHMp5akxDhghlik9pEe9vyoquDq2v7hnipTPdn3jWZRMWsiHVh964Jplt4tsodnH5sK1c-i1meZx6P2Lmnk2PeC7K-Y9sCSTRNCvdQuSbX1b8~GbenC9W8qeKcsaWGhBVx~hmApPgseHmP3cue2y-da5dYwrdQfOOk6ZDq-mgVz0sLfgydBpbUORvTjPZMXYfJI3kDThi8QXhVPz7ZuEYIRHaCSQCH2w__"
-              alt=""
-            />
-            <p>iPhone 11 Pro (256 GB) - Gray </p>
-          </div>
-          <div className="cart-price">
-            <span>
-              <del>₹36999</del>
-            </span>
-            <span>₹32999</span>
-          </div>
-          <div className="cart-quantity">
-            <button onClick={decreaseCount2}>-</button>
-            <h2> {count2}</h2>
-            <button onClick={increaseCount2}>+</button>
-          </div>
-          <div className="cart-total">
-            <span>₹32999</span>
-          </div>
-        </div>
+        {
+          !cart ? <div className="w-full text-center mt-12">'Unvailable'</div> :
+            cart.map((i: any) => <CartProductItem key={i.id} product={i} updateCart={setCart} />)
+        }
       </div>
       <div className="right">
         <div className="cart-total">

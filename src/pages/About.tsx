@@ -1,8 +1,12 @@
 import '@/styles/About.css'
+import { Helmet } from 'react-helmet';
 
 export default function About() {
    return (<>
-
+      <Helmet>
+         <title>About</title>
+         <meta name="description" content="Helmet application" />
+      </Helmet>
       <div className="bg-gray-100 py-20 px-10 lg:px-20 text-gray-400">
          <div className="text-center">
             <h1 className="text-3xl lg:text-6xl mt-5 lg:my-5 font-bold">About Us</h1>
@@ -34,15 +38,15 @@ export default function About() {
             <div className="lg:py-20 lg:mx-20 py-5 flex lg:block">
                <p className="mb-5">Share</p>
                <div className="about-social">
-                  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"></svg></div>
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"></svg></div>
                <div className="about-social">
-                  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"></svg></div>
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"></svg></div>
                <div className="about-social">
-                  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                   </svg>
                </div>
                <div className="about-social">
-                  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                   </svg>
                </div>
             </div>

@@ -1,14 +1,13 @@
-import axios from "axios";
-import { NavLink, useParams } from "react-router-dom";
-import { Carousel } from "flowbite-react";
-import { addToCartServer } from "@/services/cart";
-import { logout } from "@/services/auth";
-import { convertDataProductAddToCart } from "@/utils/product";
-import { AuthContext } from "@/context/AuthContext";
-import { TbJewishStar } from "react-icons/tb";
-import { FaStar } from "react-icons/fa";
 import Axios from "@/config/axios";
-import { get } from "lodash";
+import { AuthContext } from "@/context/AuthContext";
+import { logout } from "@/services/auth";
+import { addToCartServer } from "@/services/cart";
+import { convertDataProductAddToCart, convertDataProductAddToCart2 } from "@/utils/product";
+import axios from "axios";
+import { Carousel } from "flowbite-react";
+import { FaStar } from "react-icons/fa";
+import { TbJewishStar } from "react-icons/tb";
+import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -16,7 +15,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [productDetails, setProductDetails] = useState<any>(null);
   const options = ["Memory", "Size", "Storage"];
@@ -30,7 +29,7 @@ const ProductDetail = () => {
 
         setProductDetails(res.data);
       })
-      .catch(setError)
+      .catch()
       .finally(() => setLoading(false));
   }, []);
 
@@ -73,20 +72,20 @@ const ProductDetail = () => {
     const index = cart.findIndex(
       (product: any) => product.productId === productId
     );
+    console.log("🚀 ~ addToCart ~ index:", index)
+
+
     if (index >= 0) {
       const updateCart = [...cart];
 
       productDetails.quantity = quantity;
-      updateCart[index] = productDetails;
+      const productAdd = convertDataProductAddToCart2(productDetails)
+      updateCart[index] = productAdd;
 
-      const cartItemsSave: cartItemsServerType[] = convertDataProductAddToCart(
-        cart,
-        productDetails
-      );
-      setCart(cartItemsSave);
-      addToCartServer(cartItemsSave)
+      setCart(updateCart);
+      addToCartServer(updateCart)
         .then(() => {
-          authContext.setCartItems(cartItemsSave);
+          authContext.setCartItems(updateCart);
         })
         .catch(() => {
           logout();

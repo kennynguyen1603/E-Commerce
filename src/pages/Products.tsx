@@ -3,6 +3,7 @@ import _ from 'lodash';
 import "@/styles/products.less";
 import axios from 'axios';
 import { filter as _filter, isEmpty, orderBy } from 'lodash'
+import { Helmet } from 'react-helmet';
 
 type SortByType = 'price' | 'rating' | 'popular' | 'newest';
 
@@ -15,7 +16,7 @@ interface Filter {
 }
 
 
-export default function Products({} : any) {
+export default function Products() {
   const [products, setProducts] = useState<Product[] | []>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -81,6 +82,10 @@ export default function Products({} : any) {
 
   return (
     <div className='productListing flex px-14 py-8 bg-slate-100'>
+      <Helmet>
+        <title>Products</title>
+        <meta name="description" content="Helmet application" />
+      </Helmet>
       <div className="sidebar flex">
         <ProductsCategoryAndPriceFilter filter={filter} onFilterChange={setFilter} />
       </div>

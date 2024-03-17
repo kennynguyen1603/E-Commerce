@@ -50,6 +50,7 @@ export default function Iphone() {
             {products.map((item: Product) => (
               <ProductsIphone
                 key={item._id}
+                id={item._id}
                 name={item?.name}
                 url={item?.image}
                 price={item?.price}

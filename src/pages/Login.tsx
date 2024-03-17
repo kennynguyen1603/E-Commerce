@@ -4,8 +4,9 @@ import '@/styles/Login.css';
 import { saveInfoToLocalStorage } from '@/utils/product';
 import axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Helmet } from 'react-helmet';
+import { useNavigate, useSearchParams } from 'react-router-dom'; // Import thêm các hook cần thiết từ react-router-dom
 import * as Yup from 'yup';
-import { useNavigate, useSearchParams } from 'react-router-dom' // Import thêm các hook cần thiết từ react-router-dom
 
 
 
@@ -83,6 +84,10 @@ export default function Login() {
   return (
     <>
       <div>
+        <Helmet>
+          <title>Login</title>
+          <meta name="description" content="Helmet application" />
+        </Helmet>
         <LayoutHeader />
         <div className="py-20 bg-gray-100 lg:flex lg:items-center text-gray-500">
           <div className="lg:w-1/2"><img src="./src/assets/LoginBG-89b402e9.png" alt="LoginBG" /></div>
@@ -106,7 +111,7 @@ export default function Login() {
                     <div>
                       <label htmlFor="password">Password</label>
                       <div className="flex items-center">
-                        <Field type="password" name="password" placeholder="Enter your password" className="sign-up-input-y w-full" onKeyDown={(event) => handleKeyPress(event, values)} />
+                        <Field type="password" name="password" placeholder="Enter your password" className="sign-up-input-y w-full" onKeyDown={(event: any) => handleKeyPress(event, values)} />
                         <ErrorMessage name="password" component="div" className="text-red-500" />
                       </div>
                     </div>

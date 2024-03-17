@@ -15,6 +15,23 @@ export function convertDataProductAddToCart(cartItems: cartItemsServerType[], pr
    }]
 }
 
+export function convertDataProductAddToCart2(product: any): cartItemsServerType{
+   return ({
+      productId: product._id,
+      title: product.name,
+      price: product.price,
+      quantity: 1,
+      description: "",
+      stock: product.stock,
+      thumbnail: product.image,
+      category: product.category,
+      image: product.image,
+      discountPercentage: 0,
+      rating: 4.69,
+      images: []
+   })
+}
+
 export function saveInfoToLocalStorage(infoUser: InfoUserType | null) {
    if (!infoUser)
       return localStorage.removeItem('infoUser')

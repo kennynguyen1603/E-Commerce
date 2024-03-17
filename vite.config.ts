@@ -17,5 +17,7 @@ export default defineConfig({
     alias: [
       { find: '@', replacement: '/src' }
     ]
-  }
+  },
+  // base: import.meta.env.PROD ? '/E-Commerce/' :''
+  base: process.env.NODE_ENV === 'production' ? '/E-Commerce/' :''
 })

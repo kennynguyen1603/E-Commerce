@@ -12,7 +12,7 @@ interface ProductListProps {
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
   const authContext = useContext<any>(AuthContext);
   const navigate = useNavigate();
-  let location = useLocation();
+  // let location = useLocation();
 
   const addToWishlist = (productId: string) => {
     const isProductInWishlist = authContext.wishlist.some(
@@ -109,7 +109,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
               </div>
               <Button
                 className="w-32 mt-2"
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                   addToCart(product._id);
                 }}

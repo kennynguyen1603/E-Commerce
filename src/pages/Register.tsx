@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import axios, { AxiosError } from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Axios from '@/config/axios'
+import { Helmet } from 'react-helmet';
 interface FormData {
   name: string;
   phoneNumber: string;
@@ -86,6 +87,10 @@ export default function Register() {
 
   return (
     <div>
+      <Helmet>
+        <title>Register</title>
+        <meta name="description" content="Helmet application" />
+      </Helmet>
       <LayoutHeader />
       <div className="py-20 bg-gray-100 lg:flex  text-gray-500">
         <div className="lg:w-1/2">

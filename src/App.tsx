@@ -29,7 +29,7 @@ function App() {
 
   return (
     <AuthProvider value={{ infoUser, setInfoUser, cartItems, setCartItems, wishlist, setWishlist }}>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.PROD ? `/E-Commerce/` : ''}>
         <Routes>
           <Route element={<LayoutAuth />} >
             <Route path='/login' element={<PagesLogin />} />
