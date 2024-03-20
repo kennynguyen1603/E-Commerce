@@ -1,7 +1,7 @@
 import './App.css'
 import '@/styles/Home.less';
 import AuthProvider from './context/AuthContext';
-import axios from 'axios';
+// import axios from 'axios';
 import { getInfoToLocalStorage } from './utils/product';
 import { updateAuthorization } from './config/axios';
 

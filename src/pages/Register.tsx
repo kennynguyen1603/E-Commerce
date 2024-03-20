@@ -39,7 +39,9 @@ export default function Register() {
     name: '',
     phoneNumber: '',
     email: '',
-    password: ''
+    password: '',
+    firstName: '',
+    lastName: ''
   };
 
   const validationSchema = Yup.object({
@@ -137,7 +139,7 @@ export default function Register() {
                   <label htmlFor="username">Email</label>
                 </p>
                 <div className="flex items-center">
-                  <Field type="text" name="email" placeholder="Enter your email" className="sign-up-input w-full" values="" />
+                  <Field type="email" name="email" placeholder="Enter your email" className="sign-up-input w-full" values="" />
                   <ErrorMessage name="email" component="div" className="error-message" />
                 </div>
                 <p>

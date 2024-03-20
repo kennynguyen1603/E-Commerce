@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate, useSearchParams } from 'react-router-dom' // Import thêm các hook cần thiết từ react-router-dom
+import { KeyboardEvent } from 'react';
 
 
 
@@ -40,7 +41,8 @@ export default function Login() {
         setLoading(false);
       })
       .catch((error) => {
-        setLoading(false); if (error.response && error.response.data) {
+        setLoading(false); 
+        if (error.response && error.response.data) {
           const errorMessage = error.response.data.message
           if (errorMessage == 'All field are mandatory!') {
             console.error('Login failed:', errorMessage)
@@ -62,23 +64,6 @@ export default function Login() {
     }
   };
 
-  // const handleResetPassword = (email: string, phoneNumber: string) => {
-  //   axios.post(`${import.meta.env.VITE_API_BACKEND_BASE}auth/resetPassword`, {
-  //     email,
-  //     phoneNumber
-  //   })
-  //     .then((res) => {
-  //       if (res.data.resetPasswordToken) {
-  //         setResetPasswordToken(res.data.resetPasswordToken);
-  //       } else {
-  //         console.error('Reset password failed:', res.data.message);
-  //         // Handle reset password error
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.error('Reset password failed:', error);
-  //     });
-  // };
 
   return (
     <>
@@ -106,7 +91,7 @@ export default function Login() {
                     <div>
                       <label htmlFor="password">Password</label>
                       <div className="flex items-center">
-                        <Field type="password" name="password" placeholder="Enter your password" className="sign-up-input-y w-full" onKeyDown={(event) => handleKeyPress(event, values)} />
+                        <Field type="password" name="password" placeholder="Enter your password" className="sign-up-input-y w-full" onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => handleKeyPress(event, values)} />
                         <ErrorMessage name="password" component="div" className="text-red-500" />
                       </div>
                     </div>
