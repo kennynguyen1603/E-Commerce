@@ -10,8 +10,8 @@ interface FormData {
   phoneNumber: string;
   email: string;
   password: string;
-  firstName?: string;
-  lastName?: string;
+  firstName: string;
+  lastName: string;
 }
 
 export default function Register() {
@@ -20,6 +20,8 @@ export default function Register() {
     phoneNumber: "",
     email: "",
     password: "",
+    firstName: "",
+    lastName: ""
   });
 
   const [showPassword, setShowPassword] = useState(false); // State: display the password
@@ -50,7 +52,9 @@ export default function Register() {
     name: Yup.string().required('Required'),
     phoneNumber: Yup.string().required('Required'),
     email: Yup.string().email('Invalid email address').required('Required'),
-    password: Yup.string().required("Required")
+    password: Yup.string().required("Required"),
+    firstName: Yup.string().required('Required'),
+    lastName: Yup.string().required('Required') 
   });
 
   const handleSubmit = async (values: FormData) => {
