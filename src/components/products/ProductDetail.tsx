@@ -2,12 +2,18 @@ import Axios from "@/config/axios";
 import { AuthContext } from "@/context/AuthContext";
 import { logout } from "@/services/auth";
 import { addToCartServer } from "@/services/cart";
-import { convertDataProductAddToCart, convertDataProductAddToCart2 } from "@/utils/product";
+import {
+  convertDataProductAddToCart,
+  convertDataProductAddToCart2,
+} from "@/utils/product";
 import axios from "axios";
 import { Carousel } from "flowbite-react";
 import { FaStar } from "react-icons/fa";
+import { IoIosStar, IoIosStarOutline, IoIosStarHalf } from "react-icons/io";
 import { TbJewishStar } from "react-icons/tb";
 import { useParams } from "react-router-dom";
+import "@/styles/ProductDetail.less";
+import { number } from "yup";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -15,47 +21,48 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [productDetails, setProductDetails] = useState<any>(null);
+  const [outline, setOutline] = useState("description");
   const options = ["Memory", "Size", "Storage"];
+
   useEffect(() => {
     setLoading(true);
     getCart();
     axios
       .get(`${import.meta.env.VITE_API_PRODUCT_BASE}${productId}`)
-      .then((res: any) => {
-        console.log("res:", res);
-
-        setProductDetails(res.data);
-      })
+      .then((res: any) => setProductDetails(res.data))
       .catch()
       .finally(() => setLoading(false));
   }, []);
 
-  // useEffect(() => {
-  //   console.log("productDetails", productDetails);
-  // }, [productDetails]);
+  const imgProduct = [
+    productDetails?.image,
+    productDetails?.image1,
+    productDetails?.image2,
+    productDetails?.image3,
+    productDetails?.image4,
+  ];
 
-  //loading
+  const priorityFeatures = [
+    { icon: "📱", decs: "Free 1 Year Warranty" },
+    { icon: "🚚", decs: "Free Delivery & Fasted Delivery" },
+    { icon: "💰", decs: "100% Money-back guarantee" },
+    { icon: "📞", decs: "24/7 Customer Support" },
+    { icon: "🔒", decs: "Secure Payment Methods" },
+  ];
 
-  // const isProduct = products.find((product) => product._id === productId);
-  // if (!isProduct) return <div>Product not found</div>;
+  const ShippingInformation = {
+    courier: "2 - 4 days, free shipping",
+    LocalShipping: "up to one week, $19.00",
+    USPGroundShipping: "4 - 6 days, $29.00",
+    UnishopGlobalExpory: "3 - 4 days, $39.00",
+  };
 
-  // const imgProduct = [
-  //   isProduct.image,
-  //   isProduct.image1,
-  //   isProduct.image2,
-  //   isProduct.image3,
-  //   isProduct.image4,
-  // ];
   function getCart() {
     Axios.get("carts/get")
       .then((res) => {
-        console.log("🚀 ~ .then ~ res:", res.data);
-        if (res?.data?.products) {
-          setCart(res.data.products);
-        }
+        if (res?.data?.products) setCart(res.data.products);
       })
       .finally(() => setLoading(false));
   }
@@ -72,60 +79,112 @@ const ProductDetail = () => {
     const index = cart.findIndex(
       (product: any) => product.productId === productId
     );
-    console.log("🚀 ~ addToCart ~ index:", index)
 
+    const updateCart = [...cart];
+    productDetails.quantity = quantity;
+    const productAdd = convertDataProductAddToCart2(productDetails);
+    updateCart[index >= 0 ? index : cart.length] = productAdd;
+    setCart(updateCart);
 
-    if (index >= 0) {
-      const updateCart = [...cart];
-
-      productDetails.quantity = quantity;
-      const productAdd = convertDataProductAddToCart2(productDetails)
-      updateCart[index] = productAdd;
-
-      setCart(updateCart);
-      addToCartServer(updateCart)
-        .then(() => {
-          authContext.setCartItems(updateCart);
-        })
-        .catch(() => {
-          logout();
-          navigate(`/login?redirect=${location.pathname}`);
-        });
-    } else {
-      const cartItemsSave: cartItemsServerType[] = convertDataProductAddToCart(
-        cart,
-        productDetails
-      );
-      setCart(cartItemsSave);
-      addToCartServer(cartItemsSave)
-        .then(() => {
-          authContext.setCartItems(cartItemsSave);
-        })
-        .catch(() => {
-          logout();
-          navigate(`/login?redirect=${location.pathname}`);
-        });
-    }
+    addToCartServer(updateCart)
+      .then(() => authContext.setCartItems(updateCart))
+      .catch(() => {
+        logout();
+        navigate(`/login?redirect=${location.pathname}`);
+      });
   }
 
   function handleChangeDetail(a: string) {
-    setProductDetails(a === "description" ? "description" : "review");
+    setOutline(a === "description" ? "description" : "review");
   }
 
   if (loading || !productDetails) return <div>Loading...</div>;
+
+  const ratings = {
+    fiveStar: 94532,
+    fourStar: 6717,
+    threeStar: 714,
+    twoStar: 152,
+    oneStar: 643,
+  };
+  const totalRatings = Object.values(ratings).reduce(
+    (acc, count) => acc + count,
+    0
+  );
+  const averageRating = (
+    (5 * ratings.fiveStar +
+      4 * ratings.fourStar +
+      3 * ratings.threeStar +
+      2 * ratings.twoStar +
+      1 * ratings.oneStar) /
+    totalRatings
+  ).toFixed(1);
+
+  const RatingBar = ({
+    starCount,
+    count,
+    total,
+  }: {
+    starCount: number;
+    count: number;
+    total: number;
+  }) => {
+    const widthPercentage = (count / total) * 100;
+    return (
+      <div className="flex items-center my-1">
+        <div className="flex w-1/5 mr-2.5 justify-center">
+          {[...Array(starCount)].map((_, index) => (
+            <IoIosStar key={index} className="text-amber-300" />
+          ))}
+          {starCount < 5 &&
+            [...Array(5 - starCount)].map((_, index) => (
+              <IoIosStarOutline key={index} className="text-gray-300" />
+            ))}
+        </div>
+        <div className="w-3/5 h-1 rounded-full bg-gray-300">
+          <div
+            className="h-full bg-orange-400"
+            style={{ width: `${widthPercentage}%` }}
+          ></div>
+        </div>
+        <div className="ml-2.5">
+          {widthPercentage.toFixed(1) + "%"}
+          <span>({count})</span>
+        </div>
+      </div>
+    );
+  };
+
+  const FeedbackItem = ({
+    name,
+    time,
+    rating,
+    comment,
+    avatar,
+  }: {
+    name: string;
+    time: string;
+    rating: number;
+    comment: string;
+    avatar?: string;
+  }) => {
+    return (
+      <div style={{ borderTop: "1px solid #ddd", padding: "10px 0" }}>
+        <div style={{ fontWeight: "bold" }}>{name}</div>
+        <div style={{ color: "#666", fontSize: "0.8em" }}>{time}</div>
+        <div style={{ color: "orange" }}>{"★".repeat(rating)}</div>
+        <div>{comment}</div>
+      </div>
+    );
+  };
+
   return (
-    <div className="flex justify-center items-center flex-col py-8">
+    <div className="productDetail flex justify-center items-center flex-col py-8">
       <div className="container bg-transparent flex flex-col">
         <div className="main-content w-full py-10 px-32 flex gap-10">
           <div className="slideShow w-3/4 h-98 px-3">
-            <Carousel slideInterval={5000} className="bg-red-400">
-              {[
-                productDetails.image,
-                productDetails.image1,
-                productDetails.image2,
-                productDetails.image3,
-                productDetails.image4,
-              ].map((img, index) => (
+            <Carousel slideInterval={5000} className="">
+              {imgProduct.map((img, index) => (
                 <img
                   key={index}
                   src={img}
@@ -137,12 +196,12 @@ const ProductDetail = () => {
           </div>
           <div className="infoProduct w-1/2 flex flex-col">
             <div className="rating flex items-center gap-2 mb-2">
-              <span className="text-2xl flex text-yellow-400 gap-1">
-                <FaStar />
-                <FaStar />
-                <FaStar />
-                <FaStar />
-                <FaStar />
+              <span className="text-xl flex text-yellow-400 gap-1">
+                {Array(5)
+                  .fill(0)
+                  .map((_, index) => (
+                    <FaStar key={index} />
+                  ))}
               </span>
               <span className="text-sm">5 Star Rating</span>
             </div>
@@ -169,7 +228,7 @@ const ProductDetail = () => {
             </div>
             <div className="product-options flex flex-col border-t border-gray-300">
               {options.map((option, index) => (
-                <div key={index} className="option flex flex-col pt-2 gap-2">
+                <div key={index} className="option flex flex-col pt-2">
                   <label htmlFor={option}>{option}</label>
                   <select
                     name={option}
@@ -225,30 +284,125 @@ const ProductDetail = () => {
       </div>
       <div className="container bg-white">
         <div className="sub-content">
-          <div className="flex justify-center items-center my-2 border-b border-gray-300">
-            {/* co the dung mang de luu cac gia tri sau do render ra */}
-            <Button
-              className="description bg-transparent text-slate-900 uppercase"
+          <div className="flex justify-center p-2 gap-4 items-center my-2 border-b border-gray-300">
+            <button
+              className={`outline description bg-transparent text-slate-900 uppercase ${
+                outline === "description" ? "active" : ""
+              }`}
               onClick={() => handleChangeDetail("description")}
             >
               description
-            </Button>
-            <Button
-              className="review bg-transparent text-slate-900 uppercase"
+            </button>
+            <button
+              className={`outline review bg-transparent text-slate-900 uppercase hover:bg-white ${
+                outline === "review" ? "active" : ""
+              }`}
               onClick={() => handleChangeDetail("review")}
             >
               review
-            </Button>
+            </button>
           </div>
           <div className="p-10">
-            {productDetails === "description" ? (
-              <div className="description-content">
-                <p className="mb-4">{productDetails.desc1}</p>
-                <p>{productDetails.desc2}</p>
+            {outline === "description" ? (
+              <div className="description-button grid grid-cols-4 gap-4">
+                <div className="col-span-2">
+                  <h3 className="text-lg font-medium mb-3">Description</h3>
+                  <div className="text-gray-500 text-sm">
+                    <p className="mb-2">{productDetails.desc1}</p>
+                    <p>{productDetails.desc2}</p>
+                  </div>
+                </div>
+                <div className="priorityFeatures">
+                  {/*dùng mảng để lưu các feature sau đó render ra, làm database mỗi sản phẩm có feature riêng*/}
+                  <h3 className="text-lg font-medium mb-3">Feature</h3>
+                  <ul className="flex flex-col gap-4">
+                    {priorityFeatures.map((feature, index) => (
+                      <li key={index} className="flex gap-2 text-sm">
+                        <span>{feature.icon}</span>
+                        <span className="customTextColor">{feature.decs}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium mb-3">
+                    Shipping Imformation
+                  </h3>
+                  <ul className="flex flex-col gap-5">
+                    {Object.entries(ShippingInformation).map(
+                      ([key, value], index) => (
+                        <li key={index} className="flex gap-2 text-sm">
+                          <span className="customTextColor">{key}:</span>
+                          <span className="text-gray-500">{value}</span>
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </div>
               </div>
             ) : (
-              <div>
-                <p>review</p>
+              <div className="review-content flex flex-col">
+                <div className="rating flex">
+                  <div className="overallRating w-1/4 flex flex-col justify-center items-center">
+                    <div className="ratingStar flex flex-col justify-center items-center gap-4">
+                      <div className="ratingNumber">
+                        <span className="text-4xl font-semibold">
+                          {averageRating}
+                        </span>
+                      </div>
+                      <div className="text-2xl mb-1 text-yellow-400 flex">
+                        {Array(parseInt(averageRating)).fill(<IoIosStar />)}
+                        {/* {<IoIosStarOutline/>.repeat(parseInt(averageRating))} */}
+                        <IoIosStarHalf />
+                      </div>
+                      <div className="text-sm">
+                        <span>Customer Rating</span>(
+                        {totalRatings.toLocaleString()})
+                      </div>
+                    </div>
+                  </div>
+                  <div className="ratingDetail w-3/4 space-y-2 w">
+                    <RatingBar
+                      starCount={5}
+                      count={ratings.fiveStar}
+                      total={totalRatings}
+                    />
+                    <RatingBar
+                      starCount={4}
+                      count={ratings.fourStar}
+                      total={totalRatings}
+                    />
+                    <RatingBar
+                      starCount={3}
+                      count={ratings.threeStar}
+                      total={totalRatings}
+                    />
+                    <RatingBar
+                      starCount={2}
+                      count={ratings.twoStar}
+                      total={totalRatings}
+                    />
+                    <RatingBar
+                      starCount={1}
+                      count={ratings.oneStar}
+                      total={totalRatings}
+                    />
+                  </div>
+                </div>
+                <div className="review-users mt-4">
+                  <FeedbackItem
+                    name="Dianne Russell"
+                    time="Just now"
+                    rating={5}
+                    comment="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                  />
+                  <FeedbackItem
+                    name="Courtney Henry"
+                    time="2 mins ago"
+                    rating={5}
+                    comment="In eu tortor viverra, tempor odio ac, pretium diam."
+                  />
+                </div>
               </div>
             )}
           </div>

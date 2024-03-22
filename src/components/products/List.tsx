@@ -12,7 +12,7 @@ interface ProductListProps {
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
   const authContext = useContext<any>(AuthContext);
   const navigate = useNavigate();
-  // let location = useLocation();
+  let location = useLocation();
 
   const addToWishlist = (productId: string) => {
     const isProductInWishlist = authContext.wishlist.some(
@@ -72,8 +72,6 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
             key={product._id}
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            {" "}
-            {/* Apply inline style or className to maintain current styling */}
             <div className="flex flex-col items-center bg-white p-5 product-container cursor-pointer relative">
               {authContext.wishlist.some(
                 (item: { productId: string }) => item.productId === product._id
@@ -109,7 +107,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
               </div>
               <Button
                 className="w-32 mt-2"
-                onClick={(e: any) => {
+                onClick={(e) => {
                   e.stopPropagation();
                   addToCart(product._id);
                 }}

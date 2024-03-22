@@ -13,6 +13,7 @@ export default {
       },
       colors: {
         "custom-gray": "#8B8E99",
+        customTextColor: "rgba(25, 28, 31, 1)",
       },
     },
     fontFamily: {
