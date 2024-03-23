@@ -7,13 +7,13 @@ import {
   convertDataProductAddToCart2,
 } from "@/utils/product";
 import axios from "axios";
-import { Carousel } from "flowbite-react";
 import { FaStar } from "react-icons/fa";
 import { IoIosStar, IoIosStarOutline, IoIosStarHalf } from "react-icons/io";
 import { TbJewishStar } from "react-icons/tb";
 import { useParams } from "react-router-dom";
 import "@/styles/ProductDetail.less";
 import { number } from "yup";
+import CustomCarousel from "./CustomCarousel";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -37,11 +37,11 @@ const ProductDetail = () => {
   }, []);
 
   const imgProduct = [
-    productDetails?.image,
-    productDetails?.image1,
-    productDetails?.image2,
-    productDetails?.image3,
-    productDetails?.image4,
+    { imageURL: productDetails?.image, alt: "image" },
+    { imageURL: productDetails?.image1, alt: "image1" },
+    { imageURL: productDetails?.image2, alt: "image2" },
+    { imageURL: productDetails?.image3, alt: "image3" },
+    { imageURL: productDetails?.image4, alt: "image4" },
   ];
 
   const priorityFeatures = [
@@ -183,16 +183,7 @@ const ProductDetail = () => {
       <div className="container bg-transparent flex flex-col">
         <div className="main-content w-full py-10 px-32 flex gap-10">
           <div className="slideShow w-3/4 h-98 px-3">
-            <Carousel slideInterval={5000} className="">
-              {imgProduct.map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt={productDetails.name}
-                  className="h-4/6 w-auto"
-                />
-              ))}
-            </Carousel>
+            <CustomCarousel items={imgProduct}>{""}</CustomCarousel>
           </div>
           <div className="infoProduct w-1/2 flex flex-col">
             <div className="rating flex items-center gap-2 mb-2">
@@ -242,7 +233,7 @@ const ProductDetail = () => {
                 </div>
               ))}
             </div>
-            <div className="addCart flex flex-wrap gap-2 justify-between mt-3">
+            <div className="addCart flex flex-wrap gap-3 justify-between mt-3">
               <div className="relative flex w-2/6">
                 <button
                   className="absolute left-0 top-0 h-full px-2"
