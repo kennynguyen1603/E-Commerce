@@ -1,45 +1,54 @@
-import { CiCircleRemove } from 'react-icons/ci'
+// file ProductItem.tsx
+import { CiCircleRemove } from "react-icons/ci";
+import { useState, useEffect } from "react"; 
 
 interface ProductItemProps {
-  product: any,
-  updateCart: (products: any) => any
+  product: any;
+  updateCart: (products: any) => any;
+  deleteProduct: (productId: string) => void;
+  updateProduct: (product: any, type: "+" | "-") => void;
+  updateCartTotal: (priceChange: number) => void;
 }
 
-export default function ProductItem({ product, updateCart }: ProductItemProps) {
+export default function ProductItem({ product, updateCart, deleteProduct, updateProduct, updateCartTotal }: ProductItemProps) {
+  const [quantity, setQuantity] = useState(product.quantity);
+  const [productPrice, setProductPrice] = useState(product.price * product.quantity); 
 
-  function updateProduct(type: '+' | '-') {
-    const productUpdate: any = { ...ProductItem, product }
+  useEffect(() => {
+    setProductPrice(product.price * quantity); 
+  }, [quantity, product.price]);
+
+  function handleDeleteProduct(productId: string) {
     updateCart((pr: any) => {
-      const index = pr.findIndex((i: any) => i.productId === product.productId)
-      if (index >= 0) {
-        const newCart = [...pr]
-        productUpdate.quantity = type === '+' ? productUpdate.quantity + 1 : productUpdate.quantity - 1 <= 0 ? 0 : productUpdate.quantity - 1
-        newCart[index] = productUpdate
-        return newCart
-      }
-    })
+      const updatedCart = pr.filter((item: any) => item.productId !== productId);
+      deleteProduct(productId);
+      return updatedCart;
+    });
+    updateCartTotal(-productPrice); 
   }
-
-  const increase = () => {
-    updateProduct('+')
-  };
-
-  const decrease = () => {
-    updateProduct('-')
-  };
-
-
+ 
+  
+  function updateProductQuantity(type: "+" | "-") {
+    const newQuantity = type === "+" ? quantity + 1 : quantity - 1;
+    if (newQuantity >= 0) {
+      setQuantity(newQuantity);
+      updateProduct({ ...product, quantity: newQuantity }, type);
+      const priceChange = type === "+" ? product.price : -product.price;
+      updateCartTotal(priceChange); 
+    }
+  }
+  
   function getCurrency(price: number): string {
-    return new Intl.NumberFormat('vn-en', { style: 'currency', currency: 'VND' }).format(price)
+    return new Intl.NumberFormat("vn-en", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
   }
 
   return (
     <div className="cart-items flex-row">
       <div className="cart-product">
-        <img
-          src={product?.thumbnail}
-          alt=""
-        />
+        <img src={product?.thumbnail} alt="" />
         <p>{product?.title}</p>
       </div>
       <div className="cart-price">
@@ -49,18 +58,21 @@ export default function ProductItem({ product, updateCart }: ProductItemProps) {
         <span>{getCurrency(product.price)}</span>
       </div>
       <div className="cart-quantity">
-        <button onClick={increase}>-</button>
-        <h2> {product?.quantity || 0}</h2>
-        <button onClick={decrease}>+</button>
+        <button onClick={() => updateProductQuantity("-")}>-</button>
+        <h2>{quantity}</h2>
+        <button onClick={() => updateProductQuantity("+")}>+</button>
       </div>
       <div className="cart-total">
-        <span>{getCurrency(product?.price * product?.quantity)}</span>
+        <span>{getCurrency(productPrice)}</span>
       </div>
       <div>
-        <button className="btn-del flex items-center justify-center bg-red-700 text-white rounded-full text-center w-8 h-8 mx-3">
-          <CiCircleRemove className='w-6' />
+        <button
+          className="btn-del flex items-center justify-center bg-red-700 text-white rounded-full text-center w-8 h-8 mx-3"
+          onClick={() => handleDeleteProduct(product.productId)}
+        >
+          <CiCircleRemove className="w-6" />
         </button>
       </div>
     </div>
-  )
+  );
 }

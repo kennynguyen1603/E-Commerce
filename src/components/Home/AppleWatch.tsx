@@ -12,7 +12,7 @@ export default function AppleWatch() {
     axios.get(`${import.meta.env.VITE_API_PRODUCT_BASE}getall`)
       .then((res: any) => {
         if (res.data) {
-          const AppleWatch = res.data.filter((p: Product) => p.category === 'appleWatch')
+          const AppleWatch = res.data.filter((p: Product) => p.category === 'Apple Watch')
           setProducts(AppleWatch);
         }
 
