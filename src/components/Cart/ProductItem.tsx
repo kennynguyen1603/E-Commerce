@@ -1,4 +1,3 @@
-// file ProductItem.tsx
 import { CiCircleRemove } from "react-icons/ci";
 import { useState, useEffect } from "react"; 
 

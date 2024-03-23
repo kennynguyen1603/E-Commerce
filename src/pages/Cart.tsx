@@ -1,4 +1,3 @@
-// file cart.tsx
 import ProductItem from "@/components/Cart/ProductItem";
 import Axios from "@/config/axios";
 import "@/styles/Cart.less";
