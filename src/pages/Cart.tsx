@@ -19,6 +19,22 @@ function Cart() {
 
   useEffect(() => getCart(), []);
 
+  // function removeProductFromCart(productId: string) {
+  //   Axios.post("carts/delete", { productId })
+  //     .then(() => {
+  //       getCart();
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
+
+  // function removeAllProductFromCart() {
+  //   Axios.post("carts/delete/all")
+  //     .then(() => {
+  //       getCart();
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
+
   if (loading) return <div>Loading... </div>;
 
   return (
@@ -28,17 +44,28 @@ function Cart() {
         <meta name="description" content="Helmet application" />
       </Helmet>
       <div className="cart-full">
-        <h1>Shopping Card</h1>
+        <div className="cart-header flex justify-between">
+          <h1>Shopping Card</h1>
+          {/* <button
+            onClick={removeAllProductFromCart}
+            className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+          >
+            Clear Cart
+          </button> */}
+        </div>
         <div className="cart-title">
           <h3>Products</h3>
           <h3>Price</h3>
           <h3>Quantity</h3>
           <h3>Sub-Total</h3>
         </div>
-        {
-          !cart ? <div className="w-full text-center mt-12">'Unvailable'</div> :
-            cart.map((i: any) => <CartProductItem key={i.id} product={i} updateCart={setCart} />)
-        }
+        {!cart ? (
+          <div className="w-full text-center mt-12">'Unvailable'</div>
+        ) : (
+          cart.map((i: any) => (
+            <CartProductItem key={i.id} product={i} updateCart={setCart} />
+          ))
+        )}
       </div>
       <div className="right">
         <div className="cart-total">

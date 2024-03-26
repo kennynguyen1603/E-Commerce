@@ -1,6 +1,6 @@
 // import React from "react";
 import classNames from "classnames";
-import { GrPrevious, GrNext } from "react-icons/gr";
+import { GrLinkPrevious, GrLinkNext } from "react-icons/gr";
 function CustomCarousel({ items }: any) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -51,16 +51,16 @@ function CustomCarousel({ items }: any) {
         ))}
       </div>
       <button
-        className="absolute bottom-0 left-0 flex h-full items-center justify-center px-4 focus:outline-none"
+        className="turnPic left px-4 focus:outline-none"
         onClick={goToPreviousSlide}
       >
-        <GrPrevious />
+        <GrLinkPrevious className="turnPic-btn text-white" />
       </button>
       <button
-        className="absolute top-0 right-0 flex h-full items-center justify-center px-4 focus:outline-none"
+        className="turnPic right px-4 focus:outline-none"
         onClick={goToNextSlide}
       >
-        <GrNext />
+        <GrLinkNext className="turnPic-btn text-white" />
       </button>
     </div>
   );
